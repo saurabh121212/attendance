@@ -1,7 +1,7 @@
 {
   "development": {
-    "user": "root",
-    "password": "Saurabh@123",
+    "user": "user",
+    "password": "password",
     "database": "attendance_db",
     "host": "127.0.0.1",
     "dialect": "mysql",
