@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "root",
-    "password": "Saurabh@123",
+    "username": "user",
+    "password": "password",
     "database": "attendance_db",
     "host": "127.0.0.1",
     "dialect": "mysql",
@@ -10,12 +10,13 @@
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
+    "password": "Saurabh@123",
+    "database": "attendance_db",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port":3306
   },
-  
+
   "production": {
     "username": "user",
     "password": "password",
