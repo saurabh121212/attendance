@@ -42,6 +42,7 @@ function ragister(req, res, next) {
       }
     })
     .catch(err => {
+      console.log(err);
       res.data = { err }
     });
 }
