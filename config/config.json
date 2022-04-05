@@ -1,10 +1,11 @@
 {
   "development": {
-    "username": "root",
+    "user": "root",
     "password": "Saurabh@123",
     "database": "attendance_db",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port":3306
     
   },
   "test": {
