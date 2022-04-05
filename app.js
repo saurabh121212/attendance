@@ -52,11 +52,9 @@ app.get('/', (req, res) => {
   })
   
 
-
 app.use("/api/user", userRouter);
 app.use("/api/leavetype", leaveTypeRouter);
 
 
 app.use(handleResponse);
-
 module.exports = app;
