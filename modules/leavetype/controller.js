@@ -6,7 +6,7 @@ function leaveTypeCreate(req, res, next) {
     let payload = req.body;
     let missingFields = checkMissingFields(payload, ['leave_name', 'total_number_of_days', 'year'])
     if (missingFields.length) {
-      res.status(400).json( {
+      res.status(400).json({
         status: 400,
         result: {
           msg: "fields are missing",
@@ -21,7 +21,7 @@ function leaveTypeCreate(req, res, next) {
     leaveType.leaveTypeCreate(payload)
       .then(result => {
         res.status(200).json({ 
-          status: 400,
+          status: 200,
           result:{
             mes: "leave Type add"
           }

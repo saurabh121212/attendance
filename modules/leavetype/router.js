@@ -1,12 +1,11 @@
 const router = require('express').Router()
 const leaveTypeController = require("./controller")
+const auth = require("../../middlewares/authorize")
 
 
-router.post('/create',leaveTypeController.leaveTypeCreate);
-router.get('/list',leaveTypeController.leaveTypelist);
-router.put('/update/:leave_type_id',leaveTypeController.leaveTypeupdate);
-
-
+router.post('/create',auth(1),leaveTypeController.leaveTypeCreate);
+router.get('/list',auth(1),leaveTypeController.leaveTypelist);
+router.put('/update/:leave_type_id',auth(1),leaveTypeController.leaveTypeupdate);
 
 
 

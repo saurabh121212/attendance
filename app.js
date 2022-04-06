@@ -15,6 +15,8 @@ global.__middlewares = __dirname + "/middlewares";
 // routers
 const userRouter = require("./modules/user/router");
 const leaveTypeRouter = require("./modules/leavetype/router");
+const attendanceRouter = require("./modules/attendance/router");
+
 
 
 const app = express();
@@ -54,6 +56,8 @@ app.get('/', (req, res) => {
 
 app.use("/api/user", userRouter);
 app.use("/api/leavetype", leaveTypeRouter);
+app.use("/api/attendance", attendanceRouter);
+
 
 
 app.use(handleResponse);

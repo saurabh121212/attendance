@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     del_status: DataTypes.INTEGER,
     user_type: DataTypes.INTEGER,
     year: DataTypes.DATE,
+    token: DataTypes.STRING(200),
   }, {
     sequelize,
     modelName: 'user',

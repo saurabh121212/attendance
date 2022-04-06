@@ -15,9 +15,8 @@ module.exports = {
 
 
 function generateJWT(payload, secretKey) {
-
 	return jwt.sign(payload, secretKey, {
-		expiresIn: "300 days",
+		expiresIn: "2 days",
 	});
 
 }

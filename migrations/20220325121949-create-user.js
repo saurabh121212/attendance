@@ -20,8 +20,6 @@ module.exports = {
       gender:{
         type: Sequelize.STRING(45)
       },
-
-
       phone_number:{
         type: Sequelize.DOUBLE
       },
@@ -55,14 +53,31 @@ module.exports = {
       year:{
         type: Sequelize.DATE
       },
+      token:{
+        type: Sequelize.STRING(200)
+      },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE
       }
+    },{
+      timestamps:false
+    })
+    .then(()=>{
+      queryInterface.bulkInsert("users",[
+        {
+        user_name:"Admin",
+        designation:"System Admin",
+        gender:"Male",
+        phone_number:"123456789",
+        email_id:"admin@gmail.com",
+        password:"$2b$10$c1b28Wf5S3suemCUovCuTenWNXojzNO0/UJ5x.qFfscrpXSsT0oKi",
+        del_status:1,
+        user_type:1
+      }
+    ]);
     });
   },
   async down(queryInterface, Sequelize) {

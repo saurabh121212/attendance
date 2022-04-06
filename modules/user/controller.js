@@ -64,10 +64,16 @@ function login(req, res, next) {
 
   User.login(payload)
     .then(result => {
-      console.log("restult ", result);
       if (result) {
         // Check Password 
         if (bcrypt.compareSync(payload.password, result.password)) {
+         
+          // generate JWT token
+          let token = generateJWT({user_id:result.user_id,user_type:result.user_type}, process.env.JWT_SECRET);
+         
+          // update user with JWT token
+          User.updateToken(token, result.user_id)
+         
           res.status(200).json({
             status: 200,
             result:{
@@ -75,6 +81,8 @@ function login(req, res, next) {
               list: result
             } 
           })
+
+          next()
         }
         else {
           res.status(401).json({
@@ -98,6 +106,7 @@ function login(req, res, next) {
 
     })
     .catch(err => {
+      console.log(err);
       res.data = { err }
       next()
     })

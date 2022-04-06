@@ -5,7 +5,9 @@ module.exports = {
     ragister,
     login,
     userDetails,
-    userUpdate
+    userUpdate,
+    updateToken,
+    info
 }
 
 async function ragister(payload = {}) {
@@ -36,7 +38,7 @@ async function ragister(payload = {}) {
 
  async function userDetails(){
    return user.findAll({
-    attributes: {exclude:['password','otp','year']}
+    attributes: {exclude:['password','otp','year','token']}
    }).then((result)=>{
      return result;
    })
@@ -61,3 +63,27 @@ async function ragister(payload = {}) {
       })
     
  }
+
+
+ async function updateToken(token, id) {
+  return user.update({
+      token: token
+    },
+    {
+    where: { user_id: id},
+
+  })
+    .then(result => {
+      return result
+    })
+}
+
+
+async function info(values = {}) {
+  return user.findOne({
+    where: { user_id: values.id },
+  })
+    .then(result => {
+      return result
+    })
+}
