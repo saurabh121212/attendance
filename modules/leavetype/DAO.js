@@ -19,6 +19,7 @@ async function leaveTypeCreate(payload = {}) {
     })
   }
 
+  
   async function leaveTypeupdate(leave_type_id,payload){
     return leave_type.update(
       {
