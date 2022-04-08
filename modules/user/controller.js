@@ -81,8 +81,6 @@ function login(req, res, next) {
               list: result
             } 
           })
-
-          next()
         }
         else {
           res.status(401).json({
@@ -92,7 +90,6 @@ function login(req, res, next) {
             }
           })
         }
-        next()
       }
       else {
         res.status(401).json({
@@ -101,14 +98,12 @@ function login(req, res, next) {
             mes: "Email Id Incorect"
           }
         })
-        next()
       }
 
     })
     .catch(err => {
       console.log(err);
       res.data = { err }
-      next()
     })
 }
 
