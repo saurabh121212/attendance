@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     leave_name: DataTypes.STRING(200),
     leave_type: DataTypes.STRING(200),
+    leave_type_id:DataTypes.INTEGER,
     number_of_days: DataTypes.INTEGER,
     start_date: DataTypes.DATE,
     end_date: DataTypes.DATE,

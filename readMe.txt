@@ -7,5 +7,9 @@ User Status
 2 = employee
 
 
+Leave Status
+1 = Leave Approvel Pendding 
+2 = Leave Rejected 
+3 = Leave Approved
 
 ----------- End -------------

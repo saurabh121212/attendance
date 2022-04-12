@@ -16,6 +16,9 @@ global.__middlewares = __dirname + "/middlewares";
 const userRouter = require("./modules/user/router");
 const leaveTypeRouter = require("./modules/leavetype/router");
 const attendanceRouter = require("./modules/attendance/router");
+const holidaysRouter = require("./modules/holidays/router");
+const leaveRouter = require("./modules/leave/router");
+
 
 
 
@@ -57,6 +60,9 @@ app.get('/', (req, res) => {
 app.use("/api/user", userRouter);
 app.use("/api/leavetype", leaveTypeRouter);
 app.use("/api/attendance", attendanceRouter);
+app.use("/api/holidays", holidaysRouter);
+app.use("/api/leave", leaveRouter);
+
 
 
 
