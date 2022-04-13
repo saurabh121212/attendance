@@ -2,6 +2,7 @@ const router = require('express').Router()
 const leaveController = require("./controller")
 const auth = require("../../middlewares/authorize")
 
+
 // this web service is use to send leave application. 
 router.post('/leave_application',auth(1),leaveController.leaveApplication);
 

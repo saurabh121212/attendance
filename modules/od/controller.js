@@ -1,10 +1,10 @@
-const Leave = require("./DAO");
+const OD = require("./DAO");
 const { generateJWT, getDateTime, checkMissingFields } = require(__helpers + "/utils.js");
 
-function leaveApplication(req, res, next) {
+function odApplication(req, res, next) {
     let payload = req.body;
-    let missingFields = checkMissingFields(payload, ['leave_type','leave_type_id','number_of_days',
-        'start_date','end_date','leave_apply_by_id','leave_apply_by_name','year'])
+    let missingFields = checkMissingFields(payload, ['od_date','od_start_time','od_end_time',
+        'od_comments','apply_by_id','apply_by_name','year'])
     if (missingFields.length) {
       res.status(400).json({
         status: 400,
@@ -16,14 +16,14 @@ function leaveApplication(req, res, next) {
       return next()
     }
   
-    payload = { ...payload, created_at: getDateTime(), del_status: 1 , leave_status:1 };
+    payload = { ...payload, created_at: getDateTime(), del_status: 1 , od_status:1 };
   
-    Leave.leaveApplication(payload)
+    OD.odApplication(payload)
       .then(result => {
         res.status(200).json({ 
           status: 200,
           result:{
-            mes: "Leave Applied"
+            mes: "OD Applied"
           }
         })
       })
@@ -33,10 +33,9 @@ function leaveApplication(req, res, next) {
       });
   }
 
-
-  function applayLeave(req, res, next) {
+  function applayOd(req, res, next) {
     payload = req.body;
-    if (!req.params.leave_apply_by_id) {
+    if (!req.params.apply_by_id) {
       res.status(400).json({
         status: 400,
         result: {
@@ -47,12 +46,12 @@ function leaveApplication(req, res, next) {
       return next();
     }
   
-    Leave.applayLeave(req.params.leave_apply_by_id)
+    OD.applayOd(req.params.apply_by_id)
       .then((result) => {
         res.status(200).json({
           status: 200,
           result:{
-            mes: "List of Leaves Applied by emplyoee",
+            mes: "List of OD Applied by emplyoee",
             list: result
           }
         })
@@ -64,9 +63,9 @@ function leaveApplication(req, res, next) {
 
 
 
-  function leaveRequest(req, res, next) {
+  function odRequest(req, res, next) {
     payload = req.body;
-    if (!req.params.assigned_to_id) {
+    if (!req.params.send_to_id) {
       res.status(400).json({
         status: 400,
         result: {
@@ -77,12 +76,12 @@ function leaveApplication(req, res, next) {
       return next();
     }
   
-    Leave.leaveRequest(req.params.assigned_to_id)
+    OD.odRequest(req.params.send_to_id)
       .then((result) => {
         res.status(200).json({
           status: 200,
           result:{
-            mes: "List of Leave Application Recived",
+            mes: "List of OD Application Recived",
             list: result
           }
         })
@@ -93,9 +92,9 @@ function leaveApplication(req, res, next) {
   }
 
 
-  function leaveApproveReject(req, res, next) {
+  function odApproveReject(req, res, next) {
     payload = req.body;
-    if (!req.params.leave_id) {
+    if (!req.params.od_id) {
       res.status(400).json({
         status: 400,
         result: {
@@ -106,7 +105,7 @@ function leaveApplication(req, res, next) {
       return next();
     }
   
-    Leave.leaveApproveReject(req.params.leave_id,payload)
+    OD.odApproveReject(req.params.od_id,payload)
       .then((result) => {
         res.status(200).json({
           status: 200,
@@ -121,9 +120,11 @@ function leaveApplication(req, res, next) {
       })
   }
 
-  module.exports = {
-    leaveApplication,
-    applayLeave,
-    leaveRequest,
-    leaveApproveReject
+
+
+module.exports = {
+    odApplication,
+    applayOd,
+    odRequest,
+    odApproveReject
   }

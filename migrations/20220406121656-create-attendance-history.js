@@ -26,8 +26,11 @@ module.exports = {
       del_status: {
         type: Sequelize.INTEGER
       },
-      created_at: {
-        type: Sequelize.DATE
+      attendance_date: {
+        type: Sequelize.STRING(100)
+      },
+      year: {
+        type: Sequelize.STRING(45)
       },
       createdAt: {
         allowNull: false,

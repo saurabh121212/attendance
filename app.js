@@ -18,21 +18,18 @@ const leaveTypeRouter = require("./modules/leavetype/router");
 const attendanceRouter = require("./modules/attendance/router");
 const holidaysRouter = require("./modules/holidays/router");
 const leaveRouter = require("./modules/leave/router");
-
-
+const odRouter = require("./modules/od/router");
+const adminRouter = require("./modules/admin/router");
 
 
 const app = express();
 app.enable('trust proxy');
-
 
 //Development logging
 if (process.env.NODE_ENV === 'DEVELOPMENT') {
 	console.log('Logging enabled');
   app.use(morgan('dev'));
 }
-
-
 
 //Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
@@ -62,8 +59,8 @@ app.use("/api/leavetype", leaveTypeRouter);
 app.use("/api/attendance", attendanceRouter);
 app.use("/api/holidays", holidaysRouter);
 app.use("/api/leave", leaveRouter);
-
-
+app.use("/api/od", odRouter);
+app.use("/api/admin", adminRouter);
 
 
 app.use(handleResponse);

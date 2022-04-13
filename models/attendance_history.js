@@ -26,7 +26,9 @@ module.exports = (sequelize, DataTypes) => {
     clock_out_time: DataTypes.STRING(50),
     comments: DataTypes.STRING(500),
     del_status: DataTypes.INTEGER,
-    created_at: DataTypes.DATE
+    attendance_date: DataTypes.STRING(100),
+   // year: DataTypes.STRING(45),
+
   }, {
     sequelize,
     modelName: 'attendance_history',

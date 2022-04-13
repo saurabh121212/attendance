@@ -42,7 +42,6 @@ function leaveRequest(assigned_to_id)
 
 
 async function leaveApproveReject(leave_id,payload={}){
-    console.log("test ",leave_id," dsd ",payload.leave_status);
     return leave_table.update(
       {
         leave_status: payload.leave_status,

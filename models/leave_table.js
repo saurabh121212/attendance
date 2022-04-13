@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     leave_type: DataTypes.STRING(200),
     leave_type_id:DataTypes.INTEGER,
     number_of_days: DataTypes.INTEGER,
-    start_date: DataTypes.DATE,
-    end_date: DataTypes.DATE,
+    start_date: DataTypes.STRING(100),
+    end_date: DataTypes.STRING(100),
     leave_apply_by_id: DataTypes.INTEGER,
     leave_apply_by_name: DataTypes.STRING(200),
     leave_apply_by_comments: DataTypes.STRING(500),
@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     assigned_to_name: DataTypes.STRING(200),
     leave_status: DataTypes.INTEGER,
     assigned_to_comments: DataTypes.STRING(500),
+    year: DataTypes.STRING(45),
     added_date: DataTypes.DATE,
     del_status: DataTypes.INTEGER
   }, {

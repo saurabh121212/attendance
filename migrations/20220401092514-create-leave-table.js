@@ -18,10 +18,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       start_date: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING(100)
       },
       end_date: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING(100)
       },
       leave_apply_by_id: {
         type: Sequelize.INTEGER
@@ -55,6 +55,9 @@ module.exports = {
       },
       leave_type_id: {
         type: Sequelize.INTEGER
+      },
+      year: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
