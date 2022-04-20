@@ -29,6 +29,7 @@ function holidaysCreate(req, res, next) {
       })
       .catch(err => {
         res.data = { err }
+        return res;
       });
   }
   
@@ -48,7 +49,6 @@ function holidaysCreate(req, res, next) {
   }
 
   
-
   function holidaysUpdate(req, res, next) {
     payload = req.body;
     if (!req.params.holiday_id) {

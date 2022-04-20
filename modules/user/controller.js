@@ -25,8 +25,8 @@ function ragister(req, res, next) {
   User.ragister(payload)
     .then(result => {
       if (result[1] === false) {
-        res.status(401).json({
-          status: 400,
+        res.status(402).json({
+          status: 402,
           result: {
             mes: "Email already Exists"
           }
