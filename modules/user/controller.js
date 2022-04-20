@@ -24,7 +24,7 @@ function ragister(req, res, next) {
 
   User.ragister(payload)
     .then(result => {
-      if (result[1] === false) {
+      if (result[1] === false) { 
         res.status(402).json({
           status: 402,
           result: {

@@ -16,4 +16,6 @@ router.get('/leave_request/:assigned_to_id',auth(1),leaveController.leaveRequest
 router.put('/leave_approve_reject/:leave_id',auth(1),leaveController.leaveApproveReject);
 
 
+router.get('/leave_count',auth(1),leaveController.leaveCount);
+
 module.exports = router;

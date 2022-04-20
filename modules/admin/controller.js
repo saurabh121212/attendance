@@ -15,7 +15,7 @@ function adminTotal(req, res, next) {
       return next();
     }
   
-    AdminData.adminTotal(req.params.user_id)
+    AdminData.adminTotal(req.params.user_id,getDate())
       .then((result) => {
         res.status(200).json({
           status: 200,
@@ -31,6 +31,16 @@ function adminTotal(req, res, next) {
       })
   }
   
+function getDate()
+{
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = yyyy + '-' + mm + '-' + dd;
+  return today;
+}
+
   module.exports = {
     adminTotal
   }

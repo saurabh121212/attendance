@@ -32,10 +32,20 @@ function leaveTypeCreate(req, res, next) {
       });
   }
   
+  function leaveTypelist(req,res){
 
-  function leaveTypelist(req,res,next){
+    if (!req.params.year) {
+      res.status(400).json({
+        status: 400,
+        result: {
+          msg: "fields are missing",
+          list: []
+        }
+      })
+      return next();
+    }
 
-    leaveType.leaveTypelist()
+    leaveType.leaveTypelist(req.params.year)
     .then(result=>{
       res.status(200).json({
         status: 200,

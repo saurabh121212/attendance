@@ -121,9 +121,29 @@ function leaveApplication(req, res, next) {
       })
   }
 
+
+  function leaveCount(req, res, next) {
+    payload = req.body;
+
+    Leave.leaveCount(payload)
+      .then((result) => {
+        res.status(200).json({
+          status: 200,
+          result:{
+            mes: "Count of Leaves",
+            list: result
+          }
+        })
+      }).catch(err => {
+        res.data = { err }
+        return res;
+      })
+  }
+
   module.exports = {
     leaveApplication,
     applayLeave,
     leaveRequest,
-    leaveApproveReject
+    leaveApproveReject,
+    leaveCount
   }

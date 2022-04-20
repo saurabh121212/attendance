@@ -12,8 +12,11 @@ async function leaveTypeCreate(payload = {}) {
      payload
   )}
 
-  async function leaveTypelist(){
+  async function leaveTypelist(year){
     return leave_type.findAll({
+      where:{
+        year:year
+      }
     }).then((result)=>{
       return result
     })

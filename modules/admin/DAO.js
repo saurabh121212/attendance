@@ -5,7 +5,9 @@ module.exports = {
     adminTotal,
 }
 
-async function adminTotal(user_id) {
+async function adminTotal(user_id,date) {
+
+    console.log("Date ",date);
 
     const useCountFilter = {
         user_type: 2,
@@ -13,12 +15,11 @@ async function adminTotal(user_id) {
     }
 
     const odCountFilter = {
-        od_date: '2022-10-11',
-        year: '2022',
+        od_date: date,
     }
 
     const presentCountFinter = {
-        attendance_date: '2022-04-13',
+        attendance_date: date,
     }
 
     const filterOnLeaveToday = {
@@ -26,17 +27,18 @@ async function adminTotal(user_id) {
             [Op.ne]: 2
         },
         start_date: {
-            [Op.gte]: '2022-04-13'
+            [Op.gte]: date
         },
         end_date: {
-            [Op.lte]: '2022-04-13'
+            [Op.lte]: date
         }
     }
 
     const lateCountFilter = {
         clock_in_time: {
-            [Op.gte]: '9:15'
+            [Op.gte]: '8:15'
         },
+        attendance_date: date,
     }
 
     // this is for count total number of emp.
