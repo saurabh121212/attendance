@@ -60,7 +60,7 @@ async function attendanceList(user_id, payload = {}) {
         leave_apply_by_id: {[Op.eq]: user_id},
         start_date: {[Op.gte]: payload.start_date},
         end_date: {[Op.lte]: payload.end_date},
-        leave_status:{[Op.eq]: 1},
+        leave_status:{[Op.eq]: 3},
     }
 
 
