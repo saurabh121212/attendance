@@ -22,7 +22,7 @@ function punchIn(req, res, next) {
         res.status(402).json({
           status: 402,
           result: {
-            mes: "punch In already marked"
+            mes: "Punch In already marked"
           }
         })
       }
@@ -30,7 +30,7 @@ function punchIn(req, res, next) {
         res.status(200).json({
           status: 200,
           result: {
-            mes: "punch In Marked"
+            mes: "Punch In Marked"
           }
         })
       }
@@ -42,9 +42,10 @@ function punchIn(req, res, next) {
 }
 
 
+
 function punchOut(req, res, next) {
   let payload = req.body;
-  let missingFields = checkMissingFields(payload, ['user_id', 'user_name', 'clock_out_time'])
+  let missingFields = checkMissingFields(payload, ['user_id', 'user_name', 'clock_out_time','date'])
   if (missingFields.length) {
     res.status(400).json({
       status: 400,
@@ -63,7 +64,7 @@ function punchOut(req, res, next) {
       res.status(200).json({
         status: 200,
         result: {
-          mes: "punch Out Marked"
+          mes: "Punch Out Marked"
         }
       })
     })

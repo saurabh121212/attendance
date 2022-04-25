@@ -32,7 +32,10 @@ async function punchOutCreate(attendanceId, payload = {}) {
         comments: payload.comments
     },
         {
-            where: { attendance_id: attendanceId}
+        where: { 
+            user_id: payload.user_id,
+            attendance_date: payload.date
+        }
         }).then((result) => {
             return result
         })

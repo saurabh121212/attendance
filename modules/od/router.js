@@ -13,6 +13,7 @@ router.get('/applied_od/:apply_by_id',auth(1),odController.applayOd);
 // This web service is use to show the list of OD requests to the manager.
 router.get('/od_request/:send_to_id',auth(1),odController.odRequest);
 
+// This web service is use to update the aprove reject status of the user by manager
 router.put('/od_approve_reject/:od_id',auth(1),odController.odApproveReject);
 
 

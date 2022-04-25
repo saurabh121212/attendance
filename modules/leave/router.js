@@ -12,10 +12,10 @@ router.get('/applied_leave/:leave_apply_by_id',auth(1),leaveController.applayLea
 // This web service is use to show the list of leave requests to the manager.
 router.get('/leave_request/:assigned_to_id',auth(1),leaveController.leaveRequest);
 
-
+// This web service is use to aprprove reject the leave of use.
 router.put('/leave_approve_reject/:leave_id',auth(1),leaveController.leaveApproveReject);
 
-
+// this web service is use to count the total leave taken by the user in a year.
 router.get('/leave_count',auth(1),leaveController.leaveCount);
 
 module.exports = router;

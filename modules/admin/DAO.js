@@ -15,22 +15,23 @@ async function adminTotal(user_id,date) {
     }
 
     const odCountFilter = {
+        od_status: 3,
         od_date: date,
     }
 
     const presentCountFinter = {
         attendance_date: date,
     }
-
+    
     const filterOnLeaveToday = {
         leave_status: {
-            [Op.ne]: 2
+            [Op.eq]: 3
         },
         start_date: {
-            [Op.gte]: date
+            [Op.lte]: date  
         },
         end_date: {
-            [Op.lte]: date
+            [Op.gte]: date
         }
     }
 

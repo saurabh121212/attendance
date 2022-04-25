@@ -2,8 +2,11 @@ const router = require('express').Router()
 const attendanceController = require("./controller")
 const auth = require("../../middlewares/authorize")
 
+// Mark punch in by the user
 router.post('/punch_in',auth(1),attendanceController.punchIn);
-router.put('/punch_out/:attendance_id',auth(1),attendanceController.punchOut);
+// Mark punch out by the user
+router.put('/punch_out/',auth(1),attendanceController.punchOut);
+// this web service is use to get the user dashboard data.
 router.get('/list/:user_id',auth(1),attendanceController.attendanceList);
 
 
