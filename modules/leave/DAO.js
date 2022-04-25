@@ -56,6 +56,7 @@ async function leaveApproveReject(leave_id, payload = {}) {
 }
 
 
+
 function leaveCount(payload ={}) {
     return leave_table.findAll({
         attributes: [
@@ -63,9 +64,10 @@ function leaveCount(payload ={}) {
             [Sequelize.fn('SUM', Sequelize.col('number_of_days')), 'TotalLeaves']
         ],
         group: 'leave_type',
+        raw: true,
         where: {
             leave_apply_by_id:payload.user_id,
             year:payload.year
         }
-    })
+    });
 }

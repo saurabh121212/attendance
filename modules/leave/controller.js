@@ -136,6 +136,7 @@ function leaveApplication(req, res, next) {
         })
       }).catch(err => {
         res.data = { err }
+        console.log(err);
         return res;
       })
   }
