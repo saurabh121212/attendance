@@ -22,7 +22,7 @@ function punchIn(req, res, next) {
         res.status(402).json({
           status: 402,
           result: {
-            mes: "Punch In already marked"
+            mes: "Punch In already marked",
           }
         })
       }
@@ -30,7 +30,9 @@ function punchIn(req, res, next) {
         res.status(200).json({
           status: 200,
           result: {
-            mes: "Punch In Marked"
+            mes: "Punch In Marked",
+            date: getDate(),
+            time: payload.clock_in_time
           }
         })
       }
@@ -64,7 +66,9 @@ function punchOut(req, res, next) {
       res.status(200).json({
         status: 200,
         result: {
-          mes: "Punch Out Marked"
+          mes: "Punch Out Marked",
+          date: payload.date,
+          time: payload.clock_out_time
         }
       })
     })
