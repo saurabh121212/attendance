@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.INTEGER
     },
     holiday_name: DataTypes.STRING(200),
-    hoiday_date: DataTypes.DATE,
+    hoiday_date: DataTypes.STRING(45),
     holiday_type: DataTypes.STRING(45),
     created_at: DataTypes.DATE,
     del_status: DataTypes.INTEGER,

@@ -142,167 +142,121 @@ async function attendanceListV2(user_id, payload = {}) {
     let odList;
     let leaveList;
 
-
-
-    for (let i = 0; i <= new Date(year, month, 0).getDate(); i++) {
+    for (let i = 1; i <= new Date(year, month, 0).getDate(); i++) {
         let date = new Date(year, month, i);
 
         // This is for satuday Calculation in a month
         if (date.getDay() == 6) {
             dataObject = {
-                id : i,
-                status: 1, 
+                id: i,
+                status: 1,
                 status_text: "Saturday",
-                date:dateConversion(date)
+                date: dateConversion(date)
             }
-           // findatData.push(dataObject);
         }
-         // This code is for sundays for a month. 
+        // This code is for sundays for a month. 
         else if (date.getDay() == 0) {
             dataObject = {
-                id : i,
-                status: 2, 
+                id: i,
+                status: 2,
                 status_text: "Sunday",
-                date:dateConversion(date)
+                date: dateConversion(date)
             }
-           // findatData.push(dataObject);
         }
 
         // this code is for check persent today in the system 
-        else if(date.getDay() !== 0 && date.getDay() !== 6)
-        {
+        else if (date.getDay() !== 0 && date.getDay() !== 6) {
             attendanceHistories = await attendance_history.findOne({
-                where:{
-                    attendance_date:dateConversion(date),
+                where: {
+                    attendance_date: dateConversion(date),
                     user_id: user_id
                 }
             });
 
             dataObject = {
-                id : i,
-                status: 4, 
+                id: i,
+                status: 4,
                 status_text: "Present Today",
-                date:dateConversion(date),
+                date: dateConversion(date),
                 attendance_data: attendanceHistories
             }
-            // findatData.push(dataObject);
         }
-        
+
         // this code is for check OD today
-        if(attendanceHistories == null && date.getDay() != 6 && date.getDay() !=0)
-        {
+        if (attendanceHistories == null && date.getDay() != 6 && date.getDay() != 0) {
             // check Od 
             odList = await od_table.findOne({
-                where:{
+                where: {
                     od_date: dateConversion(date),
                     apply_by_id: user_id
                 }
             })
             dataObject = {
-                id : i,
-                status: 5, 
+                id: i,
+                status: 5,
                 status_text: "OD Data",
-                date:dateConversion(date),
+                date: dateConversion(date),
                 od_data: odList
             }
         }
 
         // This code is for check who is on Leave
-        if (attendanceHistories == null && odList == null && date.getDay() != 6 && date.getDay() !=0)
-         {
+        if (attendanceHistories == null && odList == null && date.getDay() != 6 && date.getDay() != 0) {
             leaveList = await leave_table.findOne({
-                where:{
-                    start_date: { 
-                    [Op.lte]: dateConversion(date)},
-                    end_date: { 
-                    [Op.gte]: dateConversion(date)},
+                where: {
+                    start_date: {
+                        [Op.lte]: dateConversion(date)
+                    },
+                    end_date: {
+                        [Op.gte]: dateConversion(date)
+                    },
                     leave_apply_by_id: user_id
-                } 
+                }
             });
 
             dataObject = {
-                id : i,
-                status: 8, 
+                id: i,
+                status: 8,
                 status_text: "Leave Data",
-                date:dateConversion(date),
+                date: dateConversion(date),
                 leave_data: leaveList
             }
-         }
+        }
 
-         // this is for national holiday
-
-        if (attendanceHistories == null && odList == null && leaveList == null && date.getDay() != 6 && date.getDay() !=0)
-        {
-            // this is for national holidays 
+        // this is for national holiday
+        if (attendanceHistories == null && odList == null && leaveList == null && date.getDay() != 6 && date.getDay() != 0) {
             nationalHoliday = await holidays_list.findOne({
-                where:{
+                where: {
                     hoiday_date: dateConversion(date)
                 }
-                
             });
-
-            //console.log("holiday ", nationalHoliday);
             dataObject = {
-                id : i,
-                status: 3, 
+                id: i,
+                status: 3,
                 status_text: "Natioal Holiday",
-                date:dateConversion(date),
+                date: dateConversion(date),
                 holiday: nationalHoliday
             }
         }
-      
-
-          // This code is for check who is not mark attendance
-        if (attendanceHistories == null && odList == null && leaveList == null && nationalHoliday == null && date.getDay() != 6 && date.getDay() !=0)
-        {
+        // This code is for check who is not mark attendance
+        if (attendanceHistories == null && odList == null && leaveList == null
+            && nationalHoliday == null && date.getDay() != 6 && date.getDay() != 0) {
             dataObject = {
-                id : i,
-                status: 11, 
+                id: i,
+                status: 11,
                 status_text: "Not Mark Today",
-                date:dateConversion(date),
+                date: dateConversion(date),
             }
         }
-
-        // if (attendanceHistories == null && odList == null && date.getDay() != 6 && date.getDay() !=0)
-        // {
-        //     // this is for national holidays 
-        //     nationalHoliday =  holidays_list.findOne({
-        //         where:{
-        //             hoiday_date: dateConversion(date)
-        //         }
-                
-        //     });
-
-        //     console.log("holiday ", nationalHoliday);
-        //     dataObject = {
-        //         id : i,
-        //         status: 3, 
-        //         status_text: "Natioal Holiday",
-        //         date:dateConversion(date),
-        //         holiday: nationalHoliday
-        //     }
-        // }
-        
-
         findatData.push(dataObject);
-
     };
     return findatData;
 }
 
 
-dateConversion =  (date)=>{
+dateConversion = (date) => {
     let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
-    .toISOString()
-    .split("T")[0];
+        .toISOString()
+        .split("T")[0];
     return dateString;
 }
-
-
-// obj = {
-//     id : i,
-//     status: 1, 
-//     status_text: "Logical Text",
-//     value: which is in a table 
-
-// }

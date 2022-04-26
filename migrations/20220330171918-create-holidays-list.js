@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING(200)
       },
       hoiday_date: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING(45)
       },
       holiday_type: {
         type: Sequelize.STRING(40)
