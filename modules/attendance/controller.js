@@ -99,6 +99,28 @@ function attendanceList(req, res, next) {
 }
 
 
+
+function attendanceListV2(req, res, next) {
+  let payload = req.body;
+  
+  Attendance.attendanceListV2(req.params.user_id, payload)
+    .then(result => {
+      res.status(200).json({
+        status: 200,
+        result: {
+          mes: "Attendence List",
+          list: result
+        }
+      })
+    })
+    .catch(err => {
+      console.log(err);
+      res.data = { err }
+    });
+}
+
+
+
 function getDate()
 {
   var today = new Date();
@@ -113,5 +135,6 @@ function getDate()
 module.exports = {
   punchIn,
   punchOut,
-  attendanceList
+  attendanceList,
+  attendanceListV2
 }
