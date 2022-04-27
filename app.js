@@ -54,6 +54,28 @@ app.get('/', (req, res) => {
   })
   
 
+  app.get('/get', (req, res) => {
+
+    console.log(
+      "data: ",req.params,
+      "data2: ",req.body,
+    );
+    
+    res.status(200).json({
+      version: 1.0,
+      msg: "Attendance Management System API built on NodeJs",
+    })
+  })
+
+  app.post('/postdata', (req, res) => {
+    res.status(200).json({
+      version: 1.0,
+      msg: "Attendance Management System API built on NodeJs",
+    })
+  })
+
+
+
 app.use("/api/user", userRouter);
 app.use("/api/leavetype", leaveTypeRouter);
 app.use("/api/attendance", attendanceRouter);

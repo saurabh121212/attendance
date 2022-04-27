@@ -12,4 +12,7 @@ router.get('/list/:user_id',auth(1),attendanceController.attendanceList);
 
 router.post('/listV2',auth(2),attendanceController.attendanceListV2)
 
+router.post('/testingpost',attendanceController.attendanceListV3)
+
+
 module.exports = router;

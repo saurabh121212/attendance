@@ -103,7 +103,7 @@ function attendanceList(req, res, next) {
 function attendanceListV2(req, res, next) {
   let payload = req.body;
   
-  Attendance.attendanceListV2(req.params.user_id, payload)
+  Attendance.attendanceListV2(payload)
     .then(result => {
       res.status(200).json({
         status: 200,
@@ -117,6 +117,20 @@ function attendanceListV2(req, res, next) {
       console.log(err);
       res.data = { err }
     });
+}
+
+
+
+
+function attendanceListV3(req, res, next) {
+  let payload = req.body;
+
+  console.log("datamyset ",req.body);
+  
+  res.status(200).json({
+      mes: "done",
+      data1: req.body
+  })
 }
 
 
@@ -136,5 +150,6 @@ module.exports = {
   punchIn,
   punchOut,
   attendanceList,
-  attendanceListV2
+  attendanceListV2,
+  attendanceListV3
 }
