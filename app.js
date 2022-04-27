@@ -53,17 +53,17 @@ app.get('/', (req, res) => {
     })
   })
   
-  app.get('/get', (req, res) => {
+  // app.get('/get', (req, res) => {
 
-    console.log(
-      "data: ",req.params,
-      "data2: ",req.body,
-    );
-    res.status(200).json({
-      version: 1.0,
-      msg: "Attendance Management System API built on NodeJs",
-    })
-  })
+  //   console.log(
+  //     "data: ",req.params,
+  //     "data2: ",req.body,
+  //   );
+  //   res.status(200).json({
+  //     version: 1.0,
+  //     msg: "Attendance Management System API built on NodeJs",
+  //   })
+  // })
 
 
 app.use("/api/user", userRouter);
