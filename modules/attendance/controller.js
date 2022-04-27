@@ -125,7 +125,7 @@ function attendanceListV2(req, res, next) {
 function attendanceListV3(req, res, next) {
   let payload = req.body;
 
-  console.log("datamyset ",req.body);
+  //console.log("datamyset ",req.body);
   
   res.status(200).json({
       mes: "done",
