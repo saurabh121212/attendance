@@ -129,7 +129,8 @@ async function attendanceList(user_id, payload = {}) {
 }
 
 
-async function attendanceListV2(user_id, payload = {}) {
+async function attendanceListV2(payload = {}) {
+    user_id = payload.user_id;
     let my_date = payload.start_date.split('-')
     let year = parseInt(my_date[0]);
     let month = parseInt(my_date[1]) - 1;

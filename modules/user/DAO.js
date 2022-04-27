@@ -51,6 +51,8 @@ async function ragister(payload = {}) {
        user_name: payload.user_name,
        designation: payload.designation,
        date_of_joining: payload.date_of_joining,
+       manager_id:payload.manager_id,
+       manager_name:payload.manager_name,
        gender: payload.gender,
        phone_number: payload.phone_number,
     },  

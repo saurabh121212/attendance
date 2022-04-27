@@ -10,7 +10,6 @@ router.put('/punch_out/',auth(1),attendanceController.punchOut);
 // this web service is use to get the user dashboard data.
 router.get('/list/:user_id',auth(1),attendanceController.attendanceList);
 
-
-router.get('/listV2/:user_id',auth(2),attendanceController.attendanceListV2)
+router.post('/listV2',auth(2),attendanceController.attendanceListV2)
 
 module.exports = router;
