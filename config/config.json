@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "root",
+    "username": "user",
     "password": "password",
     "database": "attendance_db",
     "host": "127.0.0.1",
