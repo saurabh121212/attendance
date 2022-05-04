@@ -32,7 +32,7 @@ async function punchInCreate(payload = {}) {
 async function punchOutCreate(attendanceId, payload = {}) {
     return attendance_history.update({
         clock_out_time: payload.clock_out_time,
-        comments: payload.comments
+        punch_out_comments: payload.comments
     },
         {
             where: {

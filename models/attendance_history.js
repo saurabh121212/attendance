@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     clock_in_time: DataTypes.STRING(50),
     clock_out_time: DataTypes.STRING(50),
     comments: DataTypes.STRING(500),
+    punch_out_comments: DataTypes.STRING(500),
     del_status: DataTypes.INTEGER,
     attendance_date: DataTypes.STRING(100),
    // year: DataTypes.STRING(45),

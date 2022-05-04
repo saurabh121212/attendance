@@ -59,7 +59,7 @@ function punchOut(req, res, next) {
     return next()
   }
 
-  payload = { ...payload, created_at: getDateTime(), del_status: 1 };
+  payload = {...payload, created_at: getDateTime(), del_status: 1};
 
   Attendance.punchOutCreate(req.params.attendance_id, payload)
     .then(result => {

@@ -38,7 +38,10 @@ async function ragister(payload = {}) {
 
  async function userDetails(){
    return user.findAll({
-    attributes: {exclude:['password','otp','year','token']}
+    attributes: {exclude:['password','otp','year','token']},
+    where:{
+      del_status:1
+    }
    }).then((result)=>{
      return result;
    })
@@ -55,6 +58,7 @@ async function ragister(payload = {}) {
        manager_name:payload.manager_name,
        gender: payload.gender,
        phone_number: payload.phone_number,
+       del_status:payload.del_status
     },  
      {
      where:{

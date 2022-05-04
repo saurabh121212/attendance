@@ -15,7 +15,8 @@ async function leaveTypeCreate(payload = {}) {
   async function leaveTypelist(year){
     return leave_type.findAll({
       where:{
-        year:year
+        year:year,
+        del_status: 1
       }
     }).then((result)=>{
       return result
@@ -29,6 +30,7 @@ async function leaveTypeCreate(payload = {}) {
         leave_name: payload.leave_name,
         total_number_of_days: payload.total_number_of_days,
         year: payload.year,
+        del_status: payload.del_status
      },  
       {
       where:{

@@ -14,18 +14,21 @@ async function holidaysCreate(payload = {}) {
 
   async function holidaysList(){
     return holidays_list.findAll({
+      where:{
+        del_status:1
+      }
     }).then((result)=>{
       return result
     })
   }
 
-  
   async function holidaysUpdate(holiday_id,payload){
     return holidays_list.update(
       {
         holiday_name: payload.holiday_name,
         hoiday_date: payload.hoiday_date,
         year: payload.year,
+        del_status: payload.del_status,
      },  
       {
       where:{

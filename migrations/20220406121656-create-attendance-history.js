@@ -23,6 +23,9 @@ module.exports = {
       comments: {
         type: Sequelize.STRING(500)
       },
+      punch_out_comments: {
+        type: Sequelize.STRING(500)
+      },
       del_status: {
         type: Sequelize.INTEGER
       },
