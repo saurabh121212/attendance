@@ -37,7 +37,7 @@ async function adminTotal(user_id,date) {
 
     const lateCountFilter = {
         clock_in_time: {
-            [Op.gte]: '8:15'
+            [Op.gte]: '08:15'
         },
         attendance_date: date,
     }
