@@ -48,7 +48,7 @@ function ragister(req, res, next) {
 }
 
 
-function login(req, res, next) {
+async function login(req, res, next) {
   let payload = req.body;
   let missingFields = checkMissingFields(payload, ['email_id', 'password'])
   if (missingFields.length) {
@@ -69,7 +69,7 @@ function login(req, res, next) {
         if (bcrypt.compareSync(payload.password, result.password)) {
          
           // generate JWT token
-          let token = generateJWT({user_id:result.user_id,user_type:result.user_type}, process.env.JWT_SECRET);
+          let token = await generateJWT({user_id:result.user_id,user_type:result.user_type}, process.env.JWT_SECRET);
          
           // update user with JWT token
           User.updateToken(token, result.user_id)
