@@ -48,7 +48,7 @@ function ragister(req, res, next) {
 }
 
 
-async function login(req, res, next) {
+ function login(req, res, next) {
   let payload = req.body;
   let missingFields = checkMissingFields(payload, ['email_id', 'password'])
   if (missingFields.length) {
@@ -62,29 +62,31 @@ async function login(req, res, next) {
     return next()
   }
 
-   await User.login(payload)
+    User.login(payload)
     .then(result => {
       if (result) {
         // Check Password 
         if (bcrypt.compareSync(payload.password, result.password)) {
          
           // generate JWT token
-          let token =  generateJWT({user_id:result.user_id,user_type:result.user_type}, process.env.JWT_SECRET);
+        let token = generateJWT({user_id:result.user_id,user_type:result.user_type}, process.env.JWT_SECRET);
          
+        //let returnValue = {token, ..};
           // update user with JWT token
-          
-        User.updateToken(token, result.user_id).then
-         (result1 =>{
-          res.status(200).json({
-            status: 200,
-            result:{
-              mes: "Login Done",
-              list: result1
-            } 
-          })
-         });
-        }
+        User.updateToken(token, result.user_id)
+        console.log("userid ",result.user_id);
 
+        User.infoV2(result.user_id).
+        then(result1 =>{
+            res.status(200).json({
+              status: 200,
+              result:{
+                mes: "Login Done",
+                list: result1
+              } 
+            })
+          });
+        }
         
         else {
           res.status(401).json({
