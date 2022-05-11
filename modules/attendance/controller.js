@@ -99,6 +99,37 @@ function attendanceList(req, res, next) {
 }
 
 
+function attendancePunchInPunchOut(req, res, next) {
+  let payload = req.body;
+  Attendance.attendancePunchInPunchOut(req.params.user_id, payload.attendance_date)
+    .then(result => {
+      if(result)
+      {
+        res.status(200).json({
+          status: 200,
+          result: {
+            mes: "Attendence Data",
+            list: result
+          }
+        })
+      }
+      else
+      {
+        res.status(205).json({
+          status: 205,
+          result: {
+            mes: "Attendance Not Mark Today",
+            list: result
+          }
+        })
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.data = { err }
+    });
+}
+
 
 function attendanceListV2(req, res, next) {
   let payload = req.body;
@@ -151,5 +182,6 @@ module.exports = {
   punchOut,
   attendanceList,
   attendanceListV2,
-  attendanceListV3
+  attendanceListV3,
+  attendancePunchInPunchOut
 }

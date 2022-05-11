@@ -13,7 +13,8 @@ module.exports = {
     punchInCreate,
     punchOutCreate,
     attendanceList,
-    attendanceListV2
+    attendanceListV2,
+    attendancePunchInPunchOut
 }
 
 async function punchInCreate(payload = {}) {
@@ -253,6 +254,20 @@ async function attendanceListV2(payload = {}) {
     };
     return findatData;
 }
+
+
+async function attendancePunchInPunchOut(user_id, date) {
+    return attendance_history.findOne({
+      where: { 
+          user_id: user_id,
+          attendance_date:date,
+          del_status:1
+            },
+    })
+      .then(result => {
+        return result
+      })
+  }
 
 
 dateConversion = (date) => {
