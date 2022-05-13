@@ -98,7 +98,7 @@ async function info(values = {}) {
 
 async function infoV2(values) {
   return user.findOne({
-    attributes: {exclude:['password','otp','year','token']},
+    attributes: {exclude:['password','otp']},
     where: { user_id: values},
   })
     .then(result => {
