@@ -4,7 +4,8 @@ const { generateJWT, getDateTime, checkMissingFields } = require(__helpers + "/u
 
 function leaveTypeCreate(req, res, next) {
     let payload = req.body;
-    let missingFields = checkMissingFields(payload, ['leave_name', 'total_number_of_days', 'year'])
+    let missingFields = checkMissingFields(payload, ['leave_name', 'total_number_of_days', 'year',
+  'eligible_for'])
     if (missingFields.length) {
       res.status(400).json({
         status: 400,

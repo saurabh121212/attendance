@@ -132,6 +132,23 @@ function userDetails(req, res, next) {
 }
 
 
+function userDetailsById(req, res, next) {
+  User.infoV2(req.params.user_id)
+    .then((result) => {
+      res.status(200).json({
+        status: 200,
+        result: {
+          mes: "User Details",
+          list: result
+        }
+      })
+    }).catch(err => {
+      res.data = { err }
+      return res;
+    })
+}
+
+
 function userUpdate(req, res, next) {
   console.log('userid ', req.params.user_id);
   payload = req.body;
@@ -165,5 +182,6 @@ module.exports = {
   ragister,
   login,
   userDetails,
-  userUpdate
+  userUpdate,
+  userDetailsById
 }

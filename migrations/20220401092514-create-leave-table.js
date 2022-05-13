@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING(200)
       },
       number_of_days: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DOUBLE
       },
       start_date: {
         type: Sequelize.STRING(100)

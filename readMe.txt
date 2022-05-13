@@ -28,3 +28,14 @@ User Dashboard status.
 9.  Leave Rejected 
 10. Leave Approved
 11. Not Marked. 
+
+
+
+-------------------------------------------------------
+
+Create Leave Type
+
+eligible_for 
+1 = Both
+2 = Man
+3 = Woman

@@ -13,9 +13,10 @@ router.post('/login',userController.login);
 // This web service is use to get the user list which are in the system. 
 router.get('/list',auth(1),userController.userDetails);
 
+// get user details by user id. 
+router.get('/list/:user_id',auth(1),userController.userDetailsById);
+
 // This Web service is use to update the values of the user.
 router.put('/update/:user_id',auth(1),userController.userUpdate);
-
-
 
 module.exports = router;

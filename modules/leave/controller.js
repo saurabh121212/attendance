@@ -19,7 +19,7 @@ function leaveApplication(req, res, next) {
     payload = { ...payload, created_at: getDateTime(), del_status: 1 , leave_status:1 };
   
     Leave.leaveApplication(payload)
-      .then(result => {
+      .then(result => {  
         res.status(200).json({ 
           status: 200,
           result:{
@@ -32,7 +32,6 @@ function leaveApplication(req, res, next) {
         res.data = { err }
       });
   }
-
 
   function applayLeave(req, res, next) {
     payload = req.body;
