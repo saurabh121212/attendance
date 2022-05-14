@@ -3,7 +3,7 @@ const { generateJWT, getDateTime, checkMissingFields } = require(__helpers + "/u
 
 function punchIn(req, res, next) {
   let payload = req.body;
-  let missingFields = checkMissingFields(payload, ['user_id', 'user_name', 'clock_in_time'])
+  let missingFields = checkMissingFields(payload, ['user_id', 'user_name', 'clock_in_time','attendance_date'])
   if (missingFields.length) {
     res.status(400).json({
       status: 400,
@@ -15,7 +15,7 @@ function punchIn(req, res, next) {
     return next()
   }
 
-  payload = { ...payload, attendance_date: getDate(), del_status: 1, createdAt: getDateTime()};
+  payload = { ...payload,del_status: 1, createdAt: getDateTime()};
   Attendance.punchInCreate(payload)
     .then(result => {
       if (result[1] === false) {
