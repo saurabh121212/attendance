@@ -31,7 +31,7 @@ function punchIn(req, res, next) {
           status: 200,
           result: {
             mes: "Punch In Marked",
-            date: getDate(),
+            date: payload.attendance_date,
             time: payload.clock_in_time
           }
         })
