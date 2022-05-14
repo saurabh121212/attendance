@@ -190,7 +190,8 @@ async function attendanceListV2(payload = {}) {
             odList = await od_table.findOne({
                 where: {
                     od_date: dateConversion(date),
-                    apply_by_id: user_id
+                    apply_by_id: user_id,
+
                 }
             })
             dataObject = {
@@ -211,6 +212,9 @@ async function attendanceListV2(payload = {}) {
                     },
                     end_date: {
                         [Op.gte]: dateConversion(date)
+                    },
+                    leave_status: {
+                        [Op.ne]: 2
                     },
                     leave_apply_by_id: user_id
                 }

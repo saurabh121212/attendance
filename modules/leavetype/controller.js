@@ -14,11 +14,10 @@ function leaveTypeCreate(req, res, next) {
           list: missingFields
         }
       })
-      return next()
+      return next();
     }
-  
     payload = { ...payload, created_at: getDateTime(), del_status: 1 };
-  
+
     leaveType.leaveTypeCreate(payload)
       .then(result => {
         res.status(200).json({ 
@@ -30,6 +29,7 @@ function leaveTypeCreate(req, res, next) {
       })
       .catch(err => {
         res.data = { err }
+        return res.data;
       });
   }
   
