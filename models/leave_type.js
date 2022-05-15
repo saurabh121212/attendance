@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     total_number_of_days: DataTypes.INTEGER,
     eligible_for: DataTypes.STRING(200),
     del_status: DataTypes.INTEGER,
-    year: DataTypes.STRING(20)
+    year: DataTypes.STRING(20),
+    createdAt: DataTypes.DATE,
   }, {
     sequelize,
     modelName: 'leave_type',

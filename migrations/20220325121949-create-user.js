@@ -17,43 +17,43 @@ module.exports = {
       date_of_joining: {
         type: Sequelize.DATE
       },
-      gender:{
+      gender: {
         type: Sequelize.STRING(45)
       },
-      phone_number:{
+      phone_number: {
         type: Sequelize.DOUBLE
       },
-      email_id:{
+      email_id: {
         type: Sequelize.STRING(200)
       },
-      department:{
+      department: {
         type: Sequelize.STRING(200)
       },
-      manager_name:{
+      manager_name: {
         type: Sequelize.STRING(200)
       },
-      manager_id:{
+      manager_id: {
         type: Sequelize.INTEGER
       },
-      password:{
+      password: {
         type: Sequelize.STRING(200)
       },
-      otp:{
+      otp: {
         type: Sequelize.STRING(45)
       },
-      created_at:{
+      created_at: {
         type: Sequelize.DATE
       },
-      del_status:{
+      del_status: {
         type: Sequelize.INTEGER
       },
-      user_type:{
+      user_type: {
         type: Sequelize.INTEGER
       },
-      year:{
+      year: {
         type: Sequelize.DATE
       },
-      token:{
+      token: {
         type: Sequelize.STRING(200)
       },
       createdAt: {
@@ -62,23 +62,23 @@ module.exports = {
       updatedAt: {
         type: Sequelize.DATE
       }
-    },{
-      timestamps:false
+    }, {
+      timestamps: false
     })
-    .then(()=>{
-      queryInterface.bulkInsert("users",[
-        {
-        user_name:"Admin",
-        designation:"System Admin",
-        gender:"Male",
-        phone_number:"123456789",
-        email_id:"admin@gmail.com",
-        password:"$2b$10$c1b28Wf5S3suemCUovCuTenWNXojzNO0/UJ5x.qFfscrpXSsT0oKi",
-        del_status:1,
-        user_type:1
-      }
-    ]);
-    });
+      .then(() => {
+        queryInterface.bulkInsert("users", [
+          {
+            user_name: "Admin",
+            designation: "System Admin",
+            gender: "Male",
+            phone_number: "123456789",
+            email_id: "admin@gmail.com",
+            password: "$2b$10$c1b28Wf5S3suemCUovCuTenWNXojzNO0/UJ5x.qFfscrpXSsT0oKi",
+            del_status: 1,
+            user_type: 1
+          }
+        ]);
+      });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Users');
