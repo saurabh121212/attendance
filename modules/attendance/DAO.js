@@ -150,7 +150,7 @@ async function attendanceListV2(payload = {}) {
         // new added
         date = new Date(date.toDateString().replace('IST', ''));
 
-        console.log("date ",date , " days ",date.getDay());
+        console.log("date ", date, " days ", date.getDay());
         // This is for satuday Calculation in a month
         if (date.getDay() == 6) {
             dataObject = {
@@ -172,7 +172,7 @@ async function attendanceListV2(payload = {}) {
 
         // this code is for check persent today in the system 
         else if (date.getDay() !== 0 && date.getDay() !== 6) {
-            console.log("attendance_date "," dateConversion(date) ",dateConversion(date) )
+            console.log("attendance_date ", " dateConversion(date) ", dateConversion(date))
 
             attendanceHistories = await attendance_history.findOne({
                 where: {
@@ -268,16 +268,16 @@ async function attendanceListV2(payload = {}) {
 
 async function attendancePunchInPunchOut(user_id, date) {
     return attendance_history.findOne({
-      where: { 
-          user_id: user_id,
-          attendance_date:date,
-          del_status:1
-            },
+        where: {
+            user_id: user_id,
+            attendance_date: date,
+            del_status: 1
+        },
     })
-      .then(result => {
-        return result
-      })
-  }
+        .then(result => {
+            return result
+        })
+}
 
 
 dateConversion = (date) => {
@@ -286,7 +286,7 @@ dateConversion = (date) => {
     //     .split("T")[0];
     // return dateString;
     let dateString = date
-    .toISOString()
-    .split("T")[0];
-      return dateString;
+        .toISOString()
+        .split("T")[0];
+    return dateString;
 }
