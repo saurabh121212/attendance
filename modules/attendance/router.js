@@ -17,7 +17,7 @@ router.post('/listV2',auth(2),attendanceController.attendanceListV2)
 
 
 
-router.post('/testingpost',attendanceController.attendanceListV3)
+router.get('/testingpost',attendanceController.attendanceListV3)
 
 
 module.exports = router;
