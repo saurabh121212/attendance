@@ -129,7 +129,6 @@ async function attendanceList(user_id, payload = {}) {
     return { attendanceListMonthly, totalWorkingHrs, avgClockInTime, avgClockOutTime, odList, odCount, leaveList, leaveCount };
 }
 
-
 async function attendanceListV2(payload = {}) {
     user_id = payload.user_id;
     let my_date = payload.start_date.split('-')

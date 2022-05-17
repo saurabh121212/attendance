@@ -89,8 +89,37 @@ function leaveTypeCreate(req, res, next) {
   }
   
 
+
+  function anualLeaveCount(req, res, next) {
+    if (!req.params.user_id) {
+      res.status(400).json({
+        status: 400,
+        result: {
+          msg: "fields are missing",
+          list: []
+        }
+      })
+      return next();
+    }
+  
+    leaveType.anualLeaveCount(req.params.user_id,getDateTime())
+      .then((result) => {
+        res.status(200).json({
+          status: 200,
+          result:{
+            mes: "Annual Leave Count",
+            list: result
+          }
+        })
+      }).catch(err => {
+        res.data = { err }
+        return res;
+      })
+  }
+
 module.exports = {
     leaveTypeCreate,
     leaveTypelist,
-    leaveTypeupdate
+    leaveTypeupdate,
+    anualLeaveCount
 }

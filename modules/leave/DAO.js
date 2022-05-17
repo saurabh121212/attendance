@@ -20,9 +20,9 @@ async function leaveApplication(payload = {}) {
     // adding manager values in the payload
     payload = { ...payload, assigned_to_id: tableData.dataValues.manager_id, assigned_to_name: tableData.dataValues.manager_name }
 
-   // sendEmail(tableData.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}`);
+    sendEmail(tableData.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}`);
 
-    sendEmail("saurabhsaini38@gmail.com","Leave Application",`${payload.leave_type} applyed by ${payload.leave_apply_by_name} from ${payload.start_date} To ${payload.end_date}.`);
+    //sendEmail("saurabhsaini38@gmail.com","Leave Application",`${payload.leave_type} applyed by ${payload.leave_apply_by_name} from ${payload.start_date} To ${payload.end_date}.`);
 
     // creating an leave application
     return leave_table.create(

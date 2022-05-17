@@ -13,4 +13,7 @@ router.get('/list/:year',auth(1),leaveTypeController.leaveTypelist);
 router.put('/update/:leave_type_id',auth(1),leaveTypeController.leaveTypeupdate);
 
 
+router.get('/anual_leave_count/:user_id',auth(1),leaveTypeController.anualLeaveCount);
+
+
 module.exports = router;
