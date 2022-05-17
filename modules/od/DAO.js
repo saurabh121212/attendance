@@ -20,8 +20,9 @@ async function odApplication(payload = {}) {
     // adding manager values in the payload
     payload = {...payload, send_to_id:tableData.dataValues.manager_id,send_to_name:tableData.dataValues.manager_name}
 
+
     // change email id
-    sendEmail("saurabhsaini38@gmail.com","OutDoor Request",`OD applyed by ${payload.leave_apply_by_name} from ${payload.od_start_time} To ${payload.od_end_time}.`);
+    sendEmail(tableData.dataValues.email_id,"OutDoor Request",`OD applyed by ${payload.leave_apply_by_name} from ${payload.od_start_time} To ${payload.od_end_time}.`);
 
     // creating an leave application
     return od_table.create(
