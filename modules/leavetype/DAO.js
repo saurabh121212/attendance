@@ -18,7 +18,8 @@ async function leaveTypelist(year) {
   return leave_type.findAll({
     where: {
       year: year,
-      del_status: 1
+      del_status:
+      { [Op.ne]: 0 } 
     }
   }).then((result) => {
     return result
@@ -56,7 +57,7 @@ async function anualLeaveCount(user_id, todayDate) {
     raw: true,
     where: {
         leave_apply_by_id:user_id,
-        leave_id:1,
+        leave_type:"Annual Leave",
         leave_status: {
             [Op.ne]: 2
         }
@@ -82,6 +83,7 @@ console.log("leaveCount ",leaveCount);
 
   if (diffMonths <= 3) {
     parseJson = {
+      id: 1,
       name: "Annual Leave",
       numberOfDays: 0,
       leaveCount:leaveCount
@@ -89,6 +91,7 @@ console.log("leaveCount ",leaveCount);
   }
   else if (diffMonths < 12) {
     parseJson = {
+      id: 1,
       name: "Annual Leave",
       numberOfDays: diffMonths,
       leaveCount:leaveCount
@@ -102,6 +105,7 @@ console.log("leaveCount ",leaveCount);
       let div = parseInt(diffMonths / 12);
       diffMonths = diffMonths + div + 1;
       parseJson = {
+        id: 1,
         name: "Annual Leave",
         numberOfDays: diffMonths,
         leaveCount:leaveCount
@@ -111,6 +115,7 @@ console.log("leaveCount ",leaveCount);
       let div = parseInt(diffMonths / 12);
       diffMonths = diffMonths + div;
       parseJson = {
+        id: 1,
         name: "Annual Leave",
         numberOfDays: diffMonths,
         leaveCount:leaveCount
