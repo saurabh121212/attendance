@@ -189,8 +189,26 @@ async function attendanceListV2(payload = {}) {
             }
         }
 
-        // this code is for check OD today
+
+        // this is for national holiday
         if (attendanceHistories == null && date.getDay() != 6 && date.getDay() != 0) {
+            nationalHoliday = await holidays_list.findOne({
+                where: {
+                    hoiday_date: dateConversion(date)
+                }
+            });
+            dataObject = {
+                id: i,
+                status: 3,
+                status_text: "Natioal Holiday",
+                date: dateConversion(date),
+                holiday: nationalHoliday
+            }
+        }
+
+
+        // this code is for check OD today
+        if (attendanceHistories == null && nationalHoliday ==null && date.getDay() != 6 && date.getDay() != 0) {
             // check Od 
             odList = await od_table.findOne({
                 where: {
@@ -209,7 +227,7 @@ async function attendanceListV2(payload = {}) {
         }
 
         // This code is for check who is on Leave
-        if (attendanceHistories == null && odList == null && date.getDay() != 6 && date.getDay() != 0) {
+        if (attendanceHistories == null && odList == null && nationalHoliday==null && date.getDay() != 6 && date.getDay() != 0) {
             leaveList = await leave_table.findOne({
                 where: {
                     start_date: {
@@ -234,21 +252,7 @@ async function attendanceListV2(payload = {}) {
             }
         }
 
-        // this is for national holiday
-        if (attendanceHistories == null && odList == null && leaveList == null && date.getDay() != 6 && date.getDay() != 0) {
-            nationalHoliday = await holidays_list.findOne({
-                where: {
-                    hoiday_date: dateConversion(date)
-                }
-            });
-            dataObject = {
-                id: i,
-                status: 3,
-                status_text: "Natioal Holiday",
-                date: dateConversion(date),
-                holiday: nationalHoliday
-            }
-        }
+
         // This code is for check who is not mark attendance
         if (attendanceHistories == null && odList == null && leaveList == null
             && nationalHoliday == null && date.getDay() != 6 && date.getDay() != 0) {
