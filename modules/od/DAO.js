@@ -27,7 +27,7 @@ async function odApplication(payload = {}) {
 
 
     // change email id
-    sendEmail(tableData2.dataValues.email_id,"OutDoor Request",`OD applyed by ${payload.leave_apply_by_name} from ${payload.od_start_time} To ${payload.od_end_time}.`);
+    sendEmail(tableData2.dataValues.email_id,"OutDoor Request",`OD applyed by ${payload.apply_by_name} from ${payload.od_start_time} To ${payload.od_end_time}.`);
 
     // creating an leave application
     return od_table.create(
