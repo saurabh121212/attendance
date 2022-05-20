@@ -17,12 +17,17 @@ async function odApplication(payload = {}) {
         where:{user_id:payload.apply_by_id}
     })
 
+    const tableData2 = await user.findOne({
+        where:{user_id:tableData.dataValues.manager_id}
+    })
+
+
     // adding manager values in the payload
     payload = {...payload, send_to_id:tableData.dataValues.manager_id,send_to_name:tableData.dataValues.manager_name}
 
 
     // change email id
-    sendEmail(tableData.dataValues.email_id,"OutDoor Request",`OD applyed by ${payload.leave_apply_by_name} from ${payload.od_start_time} To ${payload.od_end_time}.`);
+    sendEmail(tableData2.dataValues.email_id,"OutDoor Request",`OD applyed by ${payload.leave_apply_by_name} from ${payload.od_start_time} To ${payload.od_end_time}.`);
 
     // creating an leave application
     return od_table.create(

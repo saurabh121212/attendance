@@ -17,11 +17,16 @@ async function leaveApplication(payload = {}) {
         where: { user_id: payload.leave_apply_by_id }
     })
 
+    const tableData2 = await user.findOne({
+        where: { user_id: tableData.dataValues.manager_id }
+    })
+
     // adding manager values in the payload
     payload = { ...payload, assigned_to_id: tableData.dataValues.manager_id, assigned_to_name: tableData.dataValues.manager_name }
 
-    console.log("leave data ",tableData.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
-    sendEmail(tableData.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}`);
+
+    console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
+    sendEmail(tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}`);
 
     //sendEmail("saurabhsaini38@gmail.com","Leave Application",`${payload.leave_type} applyed by ${payload.leave_apply_by_name} from ${payload.start_date} To ${payload.end_date}.`);
 
