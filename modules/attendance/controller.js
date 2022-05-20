@@ -101,7 +101,7 @@ function attendanceList(req, res, next) {
 
 function attendancePunchInPunchOut(req, res, next) {
   let payload = req.body;
-  Attendance.attendancePunchInPunchOut(req.params.user_id, payload.attendance_date)
+  Attendance.attendancePunchInPunchOut(payload.user_id, payload.attendance_date)
     .then(result => {
       if(result)
       {
