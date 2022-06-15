@@ -163,6 +163,8 @@ function userUpdate(req, res, next) {
     return next();
   }
 
+  payload.password = bcrypt.hashSync(payload.password, 10);
+  
   User.userUpdate(req.params.user_id, payload)
     .then((result) => {
       res.status(200).json({

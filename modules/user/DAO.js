@@ -60,7 +60,8 @@ async function ragister(payload = {}) {
        gender: payload.gender,
        phone_number: payload.phone_number,
        del_status:payload.del_status,
-       email_id:payload.email_id
+       email_id:payload.email_id,
+       password:payload.password
     },  
      {
      where:{
