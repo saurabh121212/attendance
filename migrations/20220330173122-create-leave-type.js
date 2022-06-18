@@ -47,7 +47,7 @@ module.exports = {
           },
           {
             leave_name: "Maternity Leave",
-            total_number_of_days: "0",
+            total_number_of_days: "42",
             eligible_for: "3",
             del_status: "2",
             year: "2022",

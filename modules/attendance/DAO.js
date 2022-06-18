@@ -69,16 +69,16 @@ async function attendanceList(user_id, payload = {}) {
         leave_apply_by_id: { [Op.eq]: user_id },
         start_date: { [Op.gte]: payload.start_date },
         end_date: { [Op.lte]: payload.end_date },
-        leave_status: { [Op.eq]: 3 },
+        leave_status: { [Op.ne]: 2 },
     }
 
 
-    const attendanceListMonthly = await attendance_history.findAll({
-        where: filterOfDate,
-        order: [['attendance_id', 'DESC']],
-    }).then((result) => {
-        return result
-    })
+    // const attendanceListMonthly = await attendance_history.findAll({
+    //     where: filterOfDate,
+    //     order: [['attendance_id', 'DESC']],
+    // }).then((result) => {
+    //     return result
+    // })
 
     const totalWorkingHrs = await db.sequelize.query(
         `SELECT  subtime( SEC_TO_TIME( SUM( TIME_TO_SEC( clock_out_time ) ) ),
@@ -104,9 +104,9 @@ async function attendanceList(user_id, payload = {}) {
         { type: QueryTypes.SELECT });
 
 
-    const odList = await od_table.findAll({
-        where: odFilter
-    })
+    // const odList = await od_table.findAll({
+    //     where: odFilter
+    // })
 
     const odCount = await od_table.count({
         attributes: [
@@ -115,9 +115,9 @@ async function attendanceList(user_id, payload = {}) {
         where: odFilter
     })
 
-    const leaveList = await leave_table.findAll({
-        where: leaveFilter
-    })
+    // const leaveList = await leave_table.findAll({
+    //     where: leaveFilter
+    // })
 
     const leaveCount = await leave_table.findAll({
         attributes: [
@@ -126,14 +126,14 @@ async function attendanceList(user_id, payload = {}) {
         where: leaveFilter
     });
 
-    return { attendanceListMonthly, totalWorkingHrs, avgClockInTime, avgClockOutTime, odList, odCount, leaveList, leaveCount };
+    return { totalWorkingHrs, avgClockInTime, avgClockOutTime, odCount, leaveCount };
 }
 
 async function attendanceListV2(payload = {}) {
     user_id = payload.user_id;
     let my_date = payload.start_date.split('-')
     let year = parseInt(my_date[0]);
-    let month = parseInt(my_date[1]) - 1;
+    let month = parseInt(my_date[1]) ; // this is the change -1 hataya he yaha se
 
     let dataObject = {};
     let findatData = [];

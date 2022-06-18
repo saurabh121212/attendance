@@ -53,6 +53,18 @@ function odRequest(send_to_id)
 
 
 async function odApproveReject(od_id,payload={}){
+
+     // finding employee details.
+     const tableData = await user.findOne({
+        where: { user_id: payload.apply_by_id }
+    })
+
+    const leaveStatus = payload.od_status == 3 ? "Approved" : "Rejected"
+
+    //console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
+    sendEmail(tableData.dataValues.email_id, "OD Application Status", `Hello ${tableData.dataValues.user_name}, \n\nYour OD Application has ${leaveStatus} by your manager \nComments From Manager :-  ${payload.send_to_comments}`);
+
+
     return od_table.update(
       {
         od_status: payload.od_status,

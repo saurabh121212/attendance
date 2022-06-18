@@ -25,8 +25,8 @@ async function leaveApplication(payload = {}) {
     payload = { ...payload, assigned_to_id: tableData.dataValues.manager_id, assigned_to_name: tableData.dataValues.manager_name }
 
 
-    console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
-    sendEmail(tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}`);
+    //console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
+    sendEmail(tableData2.dataValues.email_id, "Leave Application", `${payload.leave_type} applyed by ${payload.leave_apply_by_name}`);
 
     //sendEmail("saurabhsaini38@gmail.com","Leave Application",`${payload.leave_type} applyed by ${payload.leave_apply_by_name} from ${payload.start_date} To ${payload.end_date}.`);
 
@@ -51,6 +51,18 @@ function leaveRequest(assigned_to_id) {
 
 
 async function leaveApproveReject(leave_id, payload = {}) {
+
+    // finding employee details.
+    const tableData = await user.findOne({
+        where: { user_id: payload.leave_apply_by_id }
+    })
+
+    const leaveStatus = payload.leave_status == 3 ? "Approved" : "Rejected"
+
+    //console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
+    sendEmail(tableData.dataValues.email_id, "Leave Application Status", `Hello ${tableData.dataValues.user_name}, \n\nYour Leave Application has ${leaveStatus} by your manager \nComments From Manager :-  ${payload.assigned_to_comments}`);
+
+
     return leave_table.update(
         {
             leave_status: payload.leave_status,
@@ -65,19 +77,17 @@ async function leaveApproveReject(leave_id, payload = {}) {
         })
 }
 
-
-
-function leaveCount(payload ={}) {
+function leaveCount(payload = {}) {
     return leave_table.findAll({
         attributes: [
-            "leave_type","leave_type_id",
+            "leave_type", "leave_type_id",
             [Sequelize.fn('SUM', Sequelize.col('number_of_days')), 'TotalLeaves']
         ],
         group: 'leave_type',
         raw: true,
         where: {
-            leave_apply_by_id:payload.user_id,
-            year:payload.year,
+            leave_apply_by_id: payload.user_id,
+            year: payload.year,
             leave_status: {
                 [Op.ne]: 2
             }
