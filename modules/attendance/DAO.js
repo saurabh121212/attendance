@@ -304,6 +304,9 @@ dateConversion = (date) => {
         const month = dateString.split("/")[1];
         const year = dateString.split("/")[2];
 
+        date < 10 ? day = "0"+day : day;
+        month <10 ? month = "0"+month:month;
+
         let dateStringNew = year+"-"+month+"-"+day;
 
     return dateStringNew;
