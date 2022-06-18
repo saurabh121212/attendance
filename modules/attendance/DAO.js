@@ -133,7 +133,9 @@ async function attendanceListV2(payload = {}) {
     user_id = payload.user_id;
     let my_date = payload.start_date.split('-')
     let year = parseInt(my_date[0]);
-    let month = parseInt(my_date[1]) -1 ; // this is the change -1 hataya he yaha se
+    let month = parseInt(my_date[1])-1; // this is the change -1 hataya he yaha se
+
+    console.log("yearttt ",year," month ",month);
 
     let dataObject = {};
     let findatData = [];
@@ -143,11 +145,17 @@ async function attendanceListV2(payload = {}) {
     let odList;
     let leaveList;
 
-    for (let i = 1; i <= new Date(year, month, 0).getDate(); i++) {
+    console.log("date is 2 ", new Date(year, month, 1).toLocaleString('en-US'));
+
+    const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+
+    for (let i = 1; i <= daysInMonth[month]; i++) {
         let date = new Date(year, month, i);
 
+        console.log("date is IN", new Date(year, month, 0))
+
         // new added
-        date = new Date(date.toDateString().replace('IST', ''));
+      //  date = new Date(date.toDateString().replace('IST', ''));
 
         console.log("date ", date, " days ", date.getDay());
         // This is for satuday Calculation in a month
@@ -289,7 +297,14 @@ dateConversion = (date) => {
     //     .split("T")[0];
     // return dateString;
     let dateString = date
-        .toISOString()
-        .split("T")[0];
-    return dateString;
+        .toLocaleString('en-IN')
+        .split(",")[0];
+
+        const day = dateString.split("/")[0];
+        const month = dateString.split("/")[1];
+        const year = dateString.split("/")[2];
+
+        let dateStringNew = year+"-"+month+"-"+day;
+
+    return dateStringNew;
 }
