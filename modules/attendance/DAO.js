@@ -300,12 +300,12 @@ dateConversion = (date) => {
         .toLocaleString('en-IN')
         .split(",")[0];
 
-        const day = dateString.split("/")[0];
-        const month = dateString.split("/")[1];
-        const year = dateString.split("/")[2];
+        let day = dateString.split("/")[0];
+        let month = dateString.split("/")[1];
+        let year = dateString.split("/")[2];
 
-        date < 10 ? day = "0"+day : day;
-        month <10 ? month = "0"+month:month;
+        day < 10 ? day = "0"+day : day;
+        month < 10 ? month = "0"+month : month;
 
         let dateStringNew = year+"-"+month+"-"+day;
 
