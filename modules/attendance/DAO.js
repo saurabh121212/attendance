@@ -47,7 +47,8 @@ async function punchOutCreate(attendanceId, payload = {}) {
 
 
 
-async function attendanceList(user_id, payload = {}) {
+async function attendanceList(payload = {}) {
+    let user_id = payload.user_id;
 
     const startDate = payload.start_date;
     const endDate = payload.end_date;

@@ -82,7 +82,7 @@ function punchOut(req, res, next) {
 
 function attendanceList(req, res, next) {
   let payload = req.body;
-  Attendance.attendanceList(req.params.user_id, payload)
+  Attendance.attendanceList(payload)
     .then(result => {
       res.status(200).json({
         status: 200,
