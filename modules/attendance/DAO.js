@@ -128,9 +128,12 @@ async function attendanceList(payload = {}) {
     });
 
 
+    console.log("total working hours 1 ", totalWorkingHrs);
     let hours = totalWorkingHrs.split(":")[0];
     let minuts = totalWorkingHrs.split(":")[1]
     totalWorkingHrs = hours+":"+minuts;
+
+    console.log("hours ",hours," minuts ",minuts," total horst ",totalWorkingHrs);
     
     hours = ""; minuts = "";
      
