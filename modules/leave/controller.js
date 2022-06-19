@@ -151,10 +151,47 @@ function leaveApplication(req, res, next) {
       })
   }
 
+
+
+  function leaveCountAnnual(req, res, next) {    
+    let payload = req.body;
+    let missingFields = checkMissingFields(payload, ['user_id','year'])
+    if (missingFields.length) {
+      res.status(400).json({
+        status: 400,
+        result: {
+          msg: "fields are missing",
+          list: missingFields
+        }
+      })
+      return next()
+    }
+  
+    Leave.leaveCountAnnual(payload)
+      .then((result) => {
+        res.status(200).json({
+          status: 200,
+          result:{
+            mes: "Count of Annual Leaves",
+            list: result
+          }
+        })
+      }).catch(err => {
+        res.data = { err }
+        console.log(err);
+        return res;
+      })
+  }
+
+
+
+
+
   module.exports = {
     leaveApplication,
     applayLeave,
     leaveRequest,
     leaveApproveReject,
-    leaveCount
+    leaveCount,
+    leaveCountAnnual
   }

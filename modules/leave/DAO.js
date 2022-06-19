@@ -7,7 +7,8 @@ module.exports = {
     applayLeave,
     leaveRequest,
     leaveApproveReject,
-    leaveCount
+    leaveCount,
+    leaveCountAnnual
 }
 
 async function leaveApplication(payload = {}) {
@@ -88,6 +89,25 @@ function leaveCount(payload = {}) {
         where: {
             leave_apply_by_id: payload.user_id,
             year: payload.year,
+            leave_status: {
+                [Op.ne]: 2
+            }
+        }
+    });
+}
+
+
+function leaveCountAnnual(payload = {}) {
+    return leave_table.findAll({
+        attributes: [
+            "leave_type", "leave_type_id",
+            [Sequelize.fn('SUM', Sequelize.col('number_of_days')), 'TotalLeaves']
+        ],
+        group: 'leave_type',
+        raw: true,
+        where: {
+            leave_type_id:1,
+            leave_apply_by_id: payload.user_id,
             leave_status: {
                 [Op.ne]: 2
             }

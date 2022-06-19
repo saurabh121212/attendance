@@ -18,4 +18,7 @@ router.put('/leave_approve_reject/:leave_id',auth(1),leaveController.leaveApprov
 // this web service is use to count the total leave taken by the user in a year.
 router.post('/leave_count',auth(1),leaveController.leaveCount);
 
+router.post('/leave_count_annual',auth(1),leaveController.leaveCountAnnual);
+
+
 module.exports = router;
