@@ -81,7 +81,7 @@ async function attendanceList(payload = {}) {
     //     return result
     // })
 
-    const totalWorkingHrs = await db.sequelize.query(
+    let totalWorkingHrs = await db.sequelize.query(
         `SELECT  subtime( SEC_TO_TIME( SUM( TIME_TO_SEC( clock_out_time ) ) ),
         SEC_TO_TIME( SUM( TIME_TO_SEC( clock_in_time ) ) )) As timediff 
         FROM attendance_db.attendance_histories
@@ -90,14 +90,14 @@ async function attendanceList(payload = {}) {
         { type: QueryTypes.SELECT });
 
 
-    const avgClockInTime = await db.sequelize.query(
+    let avgClockInTime = await db.sequelize.query(
         `SELECT SEC_TO_TIME(ROUND(AVG(TIME_TO_SEC(clock_in_time)),0)) 
         As avgTime FROM attendance_db.attendance_histories
         where user_id = ${user_id}
         and createdAt between '${startDate}' AND '${endDate}'`,
         { type: QueryTypes.SELECT });
 
-    const avgClockOutTime = await db.sequelize.query(
+    let avgClockOutTime = await db.sequelize.query(
         `SELECT SEC_TO_TIME(ROUND(AVG(TIME_TO_SEC(clock_out_time)),0)) As avgTime
         FROM attendance_db.attendance_histories 
         where user_id = ${user_id} 
