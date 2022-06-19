@@ -106,7 +106,7 @@ function leaveCountAnnual(payload = {}) {
         group: 'leave_type',
         raw: true,
         where: {
-            leave_type_id:1,
+            leave_type:"Annual Leave",
             leave_apply_by_id: payload.user_id,
             leave_status: {
                 [Op.ne]: 2
