@@ -127,6 +127,23 @@ async function attendanceList(payload = {}) {
         where: leaveFilter
     });
 
+
+    let hours = totalWorkingHrs.split(":")[0];
+    let minuts = totalWorkingHrs.split(":")[1]
+    totalWorkingHrs = hours+":"+minuts;
+    
+    hours = ""; minuts = "";
+     
+     hours = avgClockInTime.split(":")[0];
+     minuts = avgClockInTime.split(":")[1]
+     avgClockInTime =  hours+":"+minuts;
+
+     hours = ""; minuts = "";
+
+     hours = avgClockOutTime.split(":")[0];
+     minuts = avgClockOutTime.split(":")[1]
+     avgClockOutTime = hours+":"+minuts;
+
     return { totalWorkingHrs, avgClockInTime, avgClockOutTime, odCount, leaveCount };
 }
 
