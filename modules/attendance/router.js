@@ -8,7 +8,7 @@ router.post('/punch_in',auth(1),attendanceController.punchIn);
 router.put('/punch_out/',auth(1),attendanceController.punchOut);
 
 // this web service is use to get the user dashboard data.
-router.post('/list/:user_id',auth(1),attendanceController.attendanceList);
+router.post('/list',auth(1),attendanceController.attendanceList);
 
 // this web service is for give day wise user punchIn punchOut data
 router.post('/punch_in_data',auth(1),attendanceController.attendancePunchInPunchOut);
