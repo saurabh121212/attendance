@@ -86,7 +86,7 @@ async function attendanceList(payload = {}) {
         SEC_TO_TIME( SUM( TIME_TO_SEC( clock_in_time ) ) )) As timediff 
         FROM attendance_db.attendance_histories
         where user_id = ${user_id}
-        and createdAt between '${startDate}' AND '${endDate}'`,
+        and attendance_date between '${startDate}' AND '${endDate}'`,
         { type: QueryTypes.SELECT });
 
 
@@ -94,14 +94,14 @@ async function attendanceList(payload = {}) {
         `SELECT SEC_TO_TIME(ROUND(AVG(TIME_TO_SEC(clock_in_time)),0)) 
         As avgTime FROM attendance_db.attendance_histories
         where user_id = ${user_id}
-        and createdAt between '${startDate}' AND '${endDate}' OR createdAt IN('${startDate}','${endDate}')`,
+        and attendance_date between '${startDate}' AND '${endDate}'`,
         { type: QueryTypes.SELECT });
 
     let avgClockOutTime = await db.sequelize.query(
         `SELECT SEC_TO_TIME(ROUND(AVG(TIME_TO_SEC(clock_out_time)),0)) As avgTime
         FROM attendance_db.attendance_histories 
         where user_id = ${user_id} 
-        and createdAt between '${startDate}' AND '${endDate}'`,
+        and attendance_date between '${startDate}' AND '${endDate}'`,
         { type: QueryTypes.SELECT });
 
 
