@@ -27,7 +27,7 @@ async function odApplication(payload = {}) {
 
 
     // change email id
-    sendEmail(tableData2.dataValues.email_id,"OutDoor Request",`OD applyed by ${payload.apply_by_name} Date ${payload.od_date} Time from ${payload.od_start_time} To ${payload.od_end_time}.`);
+    sendEmail(tableData2.dataValues.email_id,payload, 3);
 
     // creating an leave application
     return od_table.create(
@@ -62,7 +62,7 @@ async function odApproveReject(od_id,payload={}){
     const leaveStatus = payload.od_status == 3 ? "Approved" : "Rejected"
 
     //console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
-    sendEmail(tableData.dataValues.email_id, "OD Application Status", `Hello ${tableData.dataValues.user_name}, \n\nYour OD Application has ${leaveStatus} by your manager \nComments From Manager :-  ${payload.send_to_comments}`);
+    sendEmail(tableData.dataValues.email_id, payload, 4);
 
 
     return od_table.update(

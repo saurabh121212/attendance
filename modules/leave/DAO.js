@@ -2,6 +2,7 @@ const { leave_table, user } = require('../../models');
 const { Op, Sequelize } = require("sequelize");
 const sendEmail = require('../../helpers/email')
 
+
 module.exports = {
     leaveApplication,
     applayLeave,
@@ -27,7 +28,7 @@ async function leaveApplication(payload = {}) {
 
 
     //console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
-    sendEmail(tableData2.dataValues.email_id, "Leave Application", `${payload.leave_type} applyed by ${payload.leave_apply_by_name}`);
+    sendEmail(tableData2.dataValues.email_id, payload,1);
 
     //sendEmail("saurabhsaini38@gmail.com","Leave Application",`${payload.leave_type} applyed by ${payload.leave_apply_by_name} from ${payload.start_date} To ${payload.end_date}.`);
 
@@ -58,10 +59,15 @@ async function leaveApproveReject(leave_id, payload = {}) {
         where: { user_id: payload.leave_apply_by_id }
     })
 
+
+    const tableData2 = await leave_table.findOne({
+        where: { leave_id: leave_id }
+    })
+
     const leaveStatus = payload.leave_status == 3 ? "Approved" : "Rejected"
 
     //console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
-    sendEmail(tableData.dataValues.email_id, "Leave Application Status", `Hello ${tableData.dataValues.user_name}, \n\nYour Leave Application has ${leaveStatus} by your manager \nComments From Manager :-  ${payload.assigned_to_comments}`);
+    sendEmail(tableData.dataValues.email_id, tableData2.dataValues,2);
 
 
     return leave_table.update(

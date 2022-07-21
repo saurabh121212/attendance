@@ -1,7 +1,36 @@
 const nodemailer = require('nodemailer');
+const emailTemplate = require('./emailTemp')
 
 
-async function sendEmail(email,subject,msg) {
+async function sendEmail(email,payload,status) {
+
+    let subject;
+    let output
+    if(status==1)
+    {
+         subject = `${payload.leave_apply_by_name} has applied for leave from ${payload.start_date} to ${payload.end_date}`
+         output = emailTemplate.managerEmailTemplate(payload);
+    }
+    else if(status == 2)
+    {
+        const leaveStatus = payload.leave_status == 3 ? "Approved" : "Rejected"
+        subject = `Leave from ${payload.start_date} to ${payload.end_date} has been ${leaveStatus}`
+        output = emailTemplate.senderEmailTemplate(payload,leaveStatus);
+    }
+
+    else if(status==3)
+    {
+         subject = `${payload.apply_by_name} has applied for OD for Date ${payload.od_date} and time ${payload.od_start_time} to ${payload.od_start_time}`
+         output = emailTemplate.managerEmailTemplateOD(payload);
+    }
+
+    else if(status == 4)
+    {
+        const leaveStatus = payload.leave_status == 3 ? "Approved" : "Rejected"
+        subject = `Your OD has been ${leaveStatus}`
+        output = `Hello User, <br><br>Your OD Application has ${leaveStatus} by your manager <br>Comments From Manager :-  ${payload.send_to_comments}`
+    }
+
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         port: 465,
@@ -14,7 +43,7 @@ async function sendEmail(email,subject,msg) {
         from: 'tcmdev20@gmail.com',
         to: email,
         subject: subject,
-        text: msg
+        html: output
     } 
     transporter.sendMail(message, function (error, info) {
         if (error) {
@@ -26,7 +55,6 @@ async function sendEmail(email,subject,msg) {
             return 1;
         }
     });
-
 }
 
 module.exports = sendEmail;
