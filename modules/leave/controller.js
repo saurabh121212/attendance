@@ -23,7 +23,7 @@ function leaveApplication(req, res, next) {
         res.status(200).json({ 
           status: 200,
           result:{
-            mes: "Leave Applied"
+            mes: "Leave Applied Successfully"
           }
         })
       })
@@ -51,7 +51,7 @@ function leaveApplication(req, res, next) {
         res.status(200).json({
           status: 200,
           result:{
-            mes: "List of Leaves Applied by emplyoee",
+            mes: "List of Leaves Applied by Emplyoee",
             list: result
           }
         })

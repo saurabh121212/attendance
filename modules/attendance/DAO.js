@@ -242,7 +242,9 @@ async function attendanceListV2(payload = {}) {
                 where: {
                     od_date: dateConversion(date),
                     apply_by_id: user_id,
-
+                    od_status:{
+                        [Op.ne]: 2
+                    }
                 }
             })
             dataObject = {
@@ -253,6 +255,7 @@ async function attendanceListV2(payload = {}) {
                 od_data: odList
             }
         }
+
 
         // This code is for check who is on Leave
         if (attendanceHistories == null && odList == null && nationalHoliday==null && date.getDay() != 6 && date.getDay() != 0) {

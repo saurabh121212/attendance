@@ -23,7 +23,7 @@ function leaveTypeCreate(req, res, next) {
         res.status(200).json({ 
           status: 200,
           result:{
-            mes: "leave Type add"
+            mes: "leave Type added successfully"
           }
         })
       })
@@ -78,7 +78,7 @@ function leaveTypeCreate(req, res, next) {
         res.status(200).json({
           status: 200,
           result:{
-            mes: "Update Leave Type Value",
+            mes: "Update leave type successfully",
             list: result
           }
         })

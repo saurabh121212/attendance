@@ -23,7 +23,7 @@ function holidaysCreate(req, res, next) {
         res.status(200).json({ 
           status: 200,
           result:{
-            mes: "Holiday add"
+            mes: "Holiday added successfully" 
           }
         })
       })
@@ -67,7 +67,7 @@ function holidaysCreate(req, res, next) {
         res.status(200).json({
           status: 200,
           result:{
-            mes: "Update Holidays Value",
+            mes: "Update Holidays Values Successfully",
             list: result
           }
         })

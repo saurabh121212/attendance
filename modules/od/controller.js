@@ -23,7 +23,7 @@ function odApplication(req, res, next) {
         res.status(200).json({ 
           status: 200,
           result:{
-            mes: "OD Applied"
+            mes: "OD Applied Successfully"
           }
         })
       })
