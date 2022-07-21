@@ -33,7 +33,7 @@ async function leaveTypeupdate(leave_type_id, payload) {
       leave_name: payload.leave_name,
       total_number_of_days: payload.total_number_of_days,
       year: payload.year,
-      del_status: payload.del_status
+      eligible_for:payload.eligible_for
     },
     {
       where: {

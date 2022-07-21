@@ -213,7 +213,7 @@ async function attendanceListV2(payload = {}) {
                 status: 4,
                 status_text: "Present Today",
                 date: dateConversion(date),
-                attendance_data: attendanceHistories
+                attendance_data: attendanceHistories,
             }
         }
 
