@@ -28,7 +28,7 @@ function ragister(req, res, next) {
         res.status(402).json({
           status: 402,
           result: {
-            mes: "Email already Exists"
+            mes: "This Email is already Exists in the system"
           }
         })
       }
@@ -36,7 +36,7 @@ function ragister(req, res, next) {
         res.status(200).json({
           status: 200,
           result: {
-            mes: "User add"
+            mes: "New Employee added successfully"
           }
         })
       }
@@ -92,7 +92,7 @@ function login(req, res, next) {
           res.status(401).json({
             status: 401,
             result: {
-              mes: "Password Incorect"
+              mes: "You have enter incorect password"
             }
           })
         }
@@ -170,7 +170,7 @@ function userUpdate(req, res, next) {
       res.status(200).json({
         status: 200,
         result: {
-          mes: "Update User Values",
+          mes: "Employee details update successfully",
           list: result
         }
       })
