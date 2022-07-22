@@ -2,6 +2,7 @@ const db = require('../../models');
 const { Op, Sequelize, QueryTypes } = require("sequelize");
 const { sequelize } = require('../../models');
 
+const user = db.user;
 const attendance_history = db.attendance_history;
 const od_table = db.od_table;
 const leave_table = db.leave_table;
@@ -14,7 +15,8 @@ module.exports = {
     punchOutCreate,
     attendanceList,
     attendanceListV2,
-    attendancePunchInPunchOut
+    attendancePunchInPunchOut,
+    singleDayEmpDetails
 }
 
 async function punchInCreate(payload = {}) {
@@ -133,9 +135,9 @@ async function attendanceList(payload = {}) {
     // totalWorkingHrs = hours+":"+minuts;
 
     // console.log("hours ",hours," minuts ",minuts," total horst ",totalWorkingHrs);
-    
+
     // hours = ""; minuts = "";
-     
+
     //  hours = avgClockInTime.split(":")[0];
     //  minuts = avgClockInTime.split(":")[1]
     //  avgClockInTime =  hours+":"+minuts;
@@ -153,9 +155,9 @@ async function attendanceListV2(payload = {}) {
     user_id = payload.user_id;
     let my_date = payload.start_date.split('-')
     let year = parseInt(my_date[0]);
-    let month = parseInt(my_date[1])-1; // this is the change -1 hataya he yaha se
+    let month = parseInt(my_date[1]) - 1; // this is the change -1 hataya he yaha se
 
-    console.log("yearttt ",year," month ",month);
+    console.log("yearttt ", year, " month ", month);
 
     let dataObject = {};
     let findatData = [];
@@ -167,7 +169,7 @@ async function attendanceListV2(payload = {}) {
 
     console.log("date is 2 ", new Date(year, month, 1).toLocaleString('en-US'));
 
-    const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+    const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
     for (let i = 1; i <= daysInMonth[month]; i++) {
         let date = new Date(year, month, i);
@@ -175,7 +177,7 @@ async function attendanceListV2(payload = {}) {
         console.log("date is IN", new Date(year, month, 0))
 
         // new added
-      //  date = new Date(date.toDateString().replace('IST', ''));
+        //  date = new Date(date.toDateString().replace('IST', ''));
 
         console.log("date ", date, " days ", date.getDay());
         // This is for satuday Calculation in a month
@@ -236,13 +238,13 @@ async function attendanceListV2(payload = {}) {
 
 
         // this code is for check OD today
-        if (attendanceHistories == null && nationalHoliday ==null && date.getDay() != 6 && date.getDay() != 0) {
+        if (attendanceHistories == null && nationalHoliday == null && date.getDay() != 6 && date.getDay() != 0) {
             // check Od 
             odList = await od_table.findOne({
                 where: {
                     od_date: dateConversion(date),
                     apply_by_id: user_id,
-                    od_status:{
+                    od_status: {
                         [Op.ne]: 2
                     }
                 }
@@ -258,7 +260,7 @@ async function attendanceListV2(payload = {}) {
 
 
         // This code is for check who is on Leave
-        if (attendanceHistories == null && odList == null && nationalHoliday==null && date.getDay() != 6 && date.getDay() != 0) {
+        if (attendanceHistories == null && odList == null && nationalHoliday == null && date.getDay() != 6 && date.getDay() != 0) {
             leaveList = await leave_table.findOne({
                 where: {
                     start_date: {
@@ -300,6 +302,156 @@ async function attendanceListV2(payload = {}) {
 }
 
 
+
+async function singleDayEmpDetails(payload = {}) {
+    let currentDate = payload.current_date;
+    let allUserData = await user.findAll();
+
+
+
+    let my_date = currentDate.split('-')
+    let year = parseInt(my_date[0]);
+    let month = parseInt(my_date[1]) - 1; // this is the change -1 hataya he yaha se
+    let day = parseInt(my_date[2]);
+
+
+    let dataObject = {};
+    let findatData = [];
+
+    let nationalHoliday = null;
+    let attendanceHistories;
+    let odList;
+    let leaveList;
+
+    console.log(allUserData);
+
+    for (let i = 0; i < allUserData.length; i++) {
+
+        let user_id = allUserData[i].dataValues.user_id;
+
+        let date = new Date(year, month, day);
+        console.log("date ", date, " days ", date.getDay());
+
+
+        // check national hotlidays
+        nationalHoliday = await holidays_list.findOne({
+            where: {
+                hoiday_date: dateConversion(date)
+            }
+        });
+
+        dataObject = {
+            id: i,
+            status: 3,
+            status_text: "Natioal Holiday",
+            user_name: allUserData[i].dataValues.user_name,
+            holiday: nationalHoliday
+        }
+
+
+        // This is for satuday Calculation in a month
+        if (date.getDay() == 6) {
+            dataObject = {
+                id: i,
+                status: 1,
+                user_name: allUserData[i].dataValues.user_name,
+                status_text: "Saturday",
+            }
+        }
+
+        // This code is for sundays for a month. 
+        else if (date.getDay() == 0) {
+            dataObject = {
+                id: i,
+                status: 2,
+                user_name: allUserData[i].dataValues.user_name,
+                status_text: "Sunday",
+            }
+        }
+        // check attendance marked or not
+        else if (nationalHoliday == null 
+            && date.getDay() != 0 && date.getDay() != 6) {
+            attendanceHistories = await attendance_history.findOne({
+                where: {
+                    attendance_date: dateConversion(date),
+                    user_id: user_id
+                }
+            });
+
+            dataObject = {
+                id: i,
+                status: 4,
+                status_text: "Present Today",
+                user_name: allUserData[i].dataValues.user_name,
+                attendance_data: attendanceHistories,
+            }
+        }
+
+        // check on Leave or not
+         if (attendanceHistories == null && date.getDay() != 0 
+         && date.getDay() != 6 && nationalHoliday == null) {
+            leaveList = await leave_table.findOne({
+                where: {
+                    start_date: {
+                        [Op.lte]: dateConversion(date)
+                    },
+                    end_date: {
+                        [Op.gte]: dateConversion(date)
+                    },
+                    leave_status: {
+                        [Op.ne]: 2
+                    },
+                    leave_apply_by_id: user_id
+                }
+            });
+
+            dataObject = {
+                id: i,
+                status: 8,
+                status_text: "Leave Data",
+                user_name: allUserData[i].dataValues.user_name,
+                leave_data: leaveList
+            }
+        }
+
+        // chek on OD or not
+         if (leaveList == null && attendanceHistories == null 
+            && date.getDay() != 0 && date.getDay() != 6 && nationalHoliday == null)  {
+            odList = await od_table.findOne({
+                where: {
+                    od_date: dateConversion(date),
+                    apply_by_id: user_id,
+                    od_status: {
+                        [Op.ne]: 2
+                    }
+                }
+            })
+            dataObject = {
+                id: i,
+                status: 5,
+                status_text: "OD Data",
+                user_name: allUserData[i].dataValues.user_name,
+                od_data: odList
+            }
+        }
+
+        if(leaveList == null && attendanceHistories == null && odList == null 
+            && date.getDay() != 0 && date.getDay() !=6  && nationalHoliday == null) {
+            dataObject = {
+                id: i,
+                status: 10,
+                user_name: allUserData[i].dataValues.user_name,
+                status_text: "Not Marked",
+            }
+        }
+        findatData.push(dataObject);
+    }
+
+    return findatData;
+}
+
+
+
 async function attendancePunchInPunchOut(user_id, date) {
     return attendance_history.findOne({
         where: {
@@ -323,14 +475,14 @@ dateConversion = (date) => {
         .toLocaleString('en-IN')
         .split(",")[0];
 
-        let day = dateString.split("/")[0];
-        let month = dateString.split("/")[1];
-        let year = dateString.split("/")[2];
+    let day = dateString.split("/")[0];
+    let month = dateString.split("/")[1];
+    let year = dateString.split("/")[2];
 
-        day < 10 ? day = "0"+day : day;
-        month < 10 ? month = "0"+month : month;
+    day < 10 ? day = "0" + day : day;
+    month < 10 ? month = "0" + month : month;
 
-        let dateStringNew = year+"-"+month+"-"+day;
+    let dateStringNew = year + "-" + month + "-" + day;
 
     return dateStringNew;
 }

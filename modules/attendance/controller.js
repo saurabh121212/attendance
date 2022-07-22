@@ -152,6 +152,28 @@ function attendanceListV2(req, res, next) {
 
 
 
+function singleDayEmpDetails(req, res, next) {
+  let payload = req.body;
+  
+  // payload data current_date
+  Attendance.singleDayEmpDetails(payload)
+    .then(result => {
+      res.status(200).json({
+        status: 200,
+        result: {
+          mes: "Single Day Employee Details",
+          list: result
+        }
+      })
+    })
+    .catch(err => {
+      console.log(err);
+      res.data = { err }
+    });
+}
+
+
+
 
 function attendanceListV3(req, res, next) {
   let payload = req.body;
@@ -183,5 +205,6 @@ module.exports = {
   attendanceList,
   attendanceListV2,
   attendanceListV3,
-  attendancePunchInPunchOut
+  attendancePunchInPunchOut,
+  singleDayEmpDetails
 }
