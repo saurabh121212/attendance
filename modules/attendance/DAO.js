@@ -439,7 +439,7 @@ async function singleDayEmpDetails(payload = {}) {
             && date.getDay() != 0 && date.getDay() !=6  && nationalHoliday == null) {
             dataObject = {
                 id: i,
-                status: 10,
+                status: 11,
                 user_name: allUserData[i].dataValues.user_name,
                 status_text: "Not Marked",
             }
