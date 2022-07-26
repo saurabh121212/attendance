@@ -19,4 +19,8 @@ router.get('/list/:user_id',auth(1),userController.userDetailsById);
 // This Web service is use to update the values of the user.
 router.put('/update/:user_id',auth(1),userController.userUpdate);
 
+// this web service is use for change password
+router.post('/change_password',auth(1),userController.userChangePassword);
+
+
 module.exports = router;

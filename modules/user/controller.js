@@ -163,7 +163,7 @@ function userUpdate(req, res, next) {
     return next();
   }
 
-  payload.password = bcrypt.hashSync(payload.password, 10);
+  //payload.password = bcrypt.hashSync(payload.password, 10);
   
   User.userUpdate(req.params.user_id, payload)
     .then((result) => {
@@ -180,10 +180,44 @@ function userUpdate(req, res, next) {
     })
 }
 
+
+
+function userChangePassword(req, res, next) {
+  payload = req.body;
+  if (!req.params.user_id) {
+    res.status(400).json({
+      status: 400,
+      result: {
+        msg: "fields are missing",
+        list: []
+      }
+    })
+    return next();
+  }
+
+  payload.password = bcrypt.hashSync(payload.password, 10);
+  
+  User.userChangePassword(payload)
+    .then((result) => {
+      res.status(200).json({
+        status: 200,
+        result: {
+          mes: "Employee Password update successfully",
+          list: result
+        }
+      })
+    }).catch(err => {
+      res.data = { err }
+      return res;
+    })
+}
+
+
 module.exports = {
   ragister,
   login,
   userDetails,
   userUpdate,
-  userDetailsById
+  userDetailsById,
+  userChangePassword
 }

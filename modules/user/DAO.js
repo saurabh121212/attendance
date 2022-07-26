@@ -8,7 +8,8 @@ module.exports = {
     userUpdate,
     updateToken,
     info,
-    infoV2
+    infoV2,
+    userChangePassword
 }
 
 async function ragister(payload = {}) {
@@ -61,7 +62,6 @@ async function ragister(payload = {}) {
        phone_number: payload.phone_number,
        del_status:payload.del_status,
        email_id:payload.email_id,
-       password:payload.password
     },  
      {
      where:{
@@ -70,8 +70,24 @@ async function ragister(payload = {}) {
       }).then((result)=>{
         return result
       })
-    
  }
+
+
+ async function userChangePassword(payload={}){
+  return user.update(
+    {
+      password: payload.password,
+   },  
+    {
+    where:{
+      user_id:payload.user_id
+    }
+     }).then((result)=>{
+       return result
+     })
+   
+}
+
 
 
  async function updateToken(token, id) {
