@@ -184,16 +184,6 @@ function userUpdate(req, res, next) {
 
 function userChangePassword(req, res, next) {
   payload = req.body;
-  if (!req.params.user_id) {
-    res.status(400).json({
-      status: 400,
-      result: {
-        msg: "fields are missing",
-        list: []
-      }
-    })
-    return next();
-  }
 
   payload.password = bcrypt.hashSync(payload.password, 10);
   
