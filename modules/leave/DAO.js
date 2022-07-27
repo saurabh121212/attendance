@@ -1,4 +1,4 @@
-const { leave_table, user } = require('../../models');
+const { leave_table, user, attendance_history ,od_table} = require('../../models');
 const { Op, Sequelize } = require("sequelize");
 const sendEmail = require('../../helpers/email')
 
@@ -14,6 +14,40 @@ module.exports = {
 
 async function leaveApplication(payload = {}) {
 
+    // check attendance
+    let attendanceMarked = await attendance_history.findOne({
+        where: {
+            attendance_date: {
+                [Op.gte]: payload.start_date,
+                [Op.lte]: payload.end_date
+            },
+            user_id: payload.leave_apply_by_id,
+        }
+    })
+
+    if (attendanceMarked != null) {
+        return result = 1;
+    }
+
+    // check Od 
+    let odList = await od_table.findOne({
+        where: {
+            od_date: {
+                [Op.gte]: payload.start_date,
+                [Op.lte]: payload.end_date
+            },
+            apply_by_id: payload.leave_apply_by_id,
+            od_status: {
+                [Op.ne]: 2
+            }
+        }
+    })
+
+    if (odList != null) {
+        return result = 2;
+    }
+
+
     // finding a manager of employee
     const tableData = await user.findOne({
         where: { user_id: payload.leave_apply_by_id }
@@ -28,7 +62,7 @@ async function leaveApplication(payload = {}) {
 
 
     //console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
-    sendEmail(tableData2.dataValues.email_id, payload,1);
+    sendEmail(tableData2.dataValues.email_id, payload, 1);
 
     //sendEmail("saurabhsaini38@gmail.com","Leave Application",`${payload.leave_type} applyed by ${payload.leave_apply_by_name} from ${payload.start_date} To ${payload.end_date}.`);
 
@@ -67,7 +101,7 @@ async function leaveApproveReject(leave_id, payload = {}) {
     const leaveStatus = payload.leave_status == 3 ? "Approved" : "Rejected"
 
     //console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
-    sendEmail(tableData.dataValues.email_id, tableData2.dataValues,2);
+    sendEmail(tableData.dataValues.email_id, tableData2.dataValues, 2);
 
 
     return leave_table.update(
@@ -112,7 +146,7 @@ function leaveCountAnnual(payload = {}) {
         group: 'leave_type',
         raw: true,
         where: {
-            leave_type:"Annual Leave",
+            leave_type: "Annual Leave",
             leave_apply_by_id: payload.user_id,
             leave_status: {
                 [Op.ne]: 2

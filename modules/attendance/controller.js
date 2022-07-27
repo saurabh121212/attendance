@@ -18,7 +18,25 @@ function punchIn(req, res, next) {
   payload = { ...payload,del_status: 1, createdAt: getDateTime()};
   Attendance.punchInCreate(payload)
     .then(result => {
-      if (result[1] === false) {
+      console.log(result);
+      if (result === 2) {
+        res.status(402).json({
+          status: 402,
+          result: {
+            mes: "You are already applyed OD for this date ",
+          }
+        })
+      }
+      else if (result === 3) {
+        res.status(402).json({
+          status: 402,
+          result: {
+            mes: "You are already applyed Leave for this date",
+          }
+        })
+      }
+
+     else if (result[1] === false) {
         res.status(402).json({
           status: 402,
           result: {

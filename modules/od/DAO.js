@@ -1,4 +1,4 @@
-const { od_table, user } = require('../../models');
+const { od_table, user , leave_table,attendance_history } = require('../../models');
 const { Op, Sequelize } = require("sequelize");
 const sendEmail = require('../../helpers/email')
 
@@ -11,6 +11,39 @@ module.exports = {
 }
 
 async function odApplication(payload = {}) {
+
+    let attendanceMarked = await attendance_history.findOne({
+        where: {
+            attendance_date: payload.od_date,
+            user_id: payload.apply_by_id,
+        }
+    })
+
+    if(attendanceMarked!= null)
+    {
+         return result = 1;
+    }
+    
+    let leaveList = await leave_table.findOne({
+        where: {
+            start_date: {
+                [Op.lte]: payload.od_date
+            },
+            end_date: {
+                [Op.gte]: payload.od_date
+            },
+            leave_status: {
+                [Op.ne]: 2
+            },
+            leave_apply_by_id: payload.apply_by_id
+        }
+    });
+
+    if(leaveList!= null)
+    {
+        return result = 3;
+    }
+
 
     // finding a manager of employee
     const tableData = await user.findOne({

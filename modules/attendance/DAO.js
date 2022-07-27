@@ -20,6 +20,44 @@ module.exports = {
 }
 
 async function punchInCreate(payload = {}) {
+
+      // check Od 
+   let odList = await od_table.findOne({
+        where: {
+            od_date: payload.attendance_date,
+            apply_by_id: payload.user_id,
+            od_status: {
+                [Op.ne]: 2
+            }
+        }
+    })
+
+    if(odList!= null)
+    {
+         return result = 2;
+    }
+
+
+   let leaveList = await leave_table.findOne({
+        where: {
+            start_date: {
+                [Op.lte]: payload.attendance_date
+            },
+            end_date: {
+                [Op.gte]: payload.attendance_date
+            },
+            leave_status: {
+                [Op.ne]: 2
+            },
+            leave_apply_by_id: payload.user_id
+        }
+    });
+
+    if(leaveList!= null)
+    {
+        return result = 3;
+    }
+    
     return attendance_history.findOrCreate({
         where: {
             user_id: payload.user_id,
