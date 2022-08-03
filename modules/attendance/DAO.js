@@ -343,8 +343,11 @@ async function attendanceListV2(payload = {}) {
 
 async function singleDayEmpDetails(payload = {}) {
     let currentDate = payload.current_date;
-    let allUserData = await user.findAll();
-
+    let allUserData = await user.findAll({
+        where:{
+            del_status:1
+        }
+    });
 
 
     let my_date = currentDate.split('-')

@@ -29,7 +29,8 @@ async function ragister(payload = {}) {
  {
    return user.findOne({
     where:{
-       email_id: payload.email_id
+       email_id: payload.email_id,
+       del_status:1
      }
    })
    .then((result)=>{
@@ -37,7 +38,7 @@ async function ragister(payload = {}) {
    }) 
  } 
 
-
+ 
  async function userDetails(){
    return user.findAll({
     attributes: {exclude:['password','otp','year','token']},
