@@ -20,15 +20,15 @@ async function sendEmail(email,payload,status) {
 
     else if(status==3)
     {
-         subject = `${payload.apply_by_name} has applied for OD for Date ${payload.od_date} and time ${payload.od_start_time} to ${payload.od_start_time}`
+         subject = `${payload.apply_by_name} has applied for OD for Date ${payload.od_date} and time ${payload.od_start_time} to ${payload.od_end_time}`
          output = emailTemplate.managerEmailTemplateOD(payload);
     }
 
     else if(status == 4)
     {
-        const leaveStatus = payload.leave_status == 3 ? "Approved" : "Rejected"
-        subject = `Your OD has been ${leaveStatus}`
-        output = `Hello User, <br><br>Your OD Application has ${leaveStatus} by your manager <br>Comments From Manager :-  ${payload.send_to_comments}`
+        const leaveStatus = payload.od_status == 3 ? "Approved" : "Rejected"
+        subject = `Your OD has been ${leaveStatus} for the date of ${payload.payloadData.od_date} and time ${payload.payloadData.od_start_time} to ${payload.payloadData.od_end_time}`
+        output = `Hello User, <br><br>Your OD Application has ${leaveStatus} for the date of ${payload.payloadData.od_date} and time ${payload.payloadData.od_start_time} to ${payload.payloadData.od_end_time} by your manager <br>Comments From Manager :-  ${payload.send_to_comments}`
     }
 
     let transporter = nodemailer.createTransport({

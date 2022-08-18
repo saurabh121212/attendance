@@ -94,15 +94,11 @@ async function leaveApproveReject(leave_id, payload = {}) {
     })
 
 
-    const tableData2 = await leave_table.findOne({
-        where: { leave_id: leave_id }
-    })
+   
 
-    const leaveStatus = payload.leave_status == 3 ? "Approved" : "Rejected"
+  //  const leaveStatus = payload.leave_status == 3 ? "Approved" : "Rejected"
 
     //console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
-    sendEmail(tableData.dataValues.email_id, tableData2.dataValues, 2);
-
 
     return leave_table.update(
         {
@@ -113,6 +109,12 @@ async function leaveApproveReject(leave_id, payload = {}) {
             where: {
                 leave_id: leave_id
             }
+        }).then(async ()=>{
+            // new change.
+            const tableData2 = await leave_table.findOne({
+                where: { leave_id: leave_id }
+            })
+                sendEmail(tableData.dataValues.email_id, tableData2.dataValues, 2);
         }).then((result) => {
             return result
         })

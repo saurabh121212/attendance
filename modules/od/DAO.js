@@ -1,4 +1,4 @@
-const { od_table, user , leave_table,attendance_history } = require('../../models');
+const { od_table, user , leave_table,attendance_history , holidays_list } = require('../../models');
 const { Op, Sequelize } = require("sequelize");
 const sendEmail = require('../../helpers/email')
 
@@ -23,6 +23,20 @@ async function odApplication(payload = {}) {
     {
          return result = 1;
     }
+
+
+    let holidayList = await holidays_list.findOne({
+        where:{
+          del_status:1,
+          hoiday_date: payload.od_date
+        }
+      })
+
+      if(holidayList!= null)
+      {
+           return result = 4;
+      }
+
     
     let leaveList = await leave_table.findOne({
         where: {
@@ -45,6 +59,7 @@ async function odApplication(payload = {}) {
     }
 
 
+
     // finding a manager of employee
     const tableData = await user.findOne({
         where:{user_id:payload.apply_by_id}
@@ -57,8 +72,7 @@ async function odApplication(payload = {}) {
 
     // adding manager values in the payload
     payload = {...payload, send_to_id:tableData.dataValues.manager_id,send_to_name:tableData.dataValues.manager_name}
-
-
+  
     // change email id
     sendEmail(tableData2.dataValues.email_id,payload, 3);
 
@@ -67,6 +81,9 @@ async function odApplication(payload = {}) {
         payload
     )
 }
+
+
+
 
 function applayOd(apply_by_id)
 {
@@ -93,6 +110,18 @@ async function odApproveReject(od_id,payload={}){
     })
 
     const leaveStatus = payload.od_status == 3 ? "Approved" : "Rejected"
+
+    // this will for get the OD date. 
+    let odData = await od_table.findOne({
+        where:{
+            od_id:od_id
+        }
+    });
+
+
+    payload = {...payload, payloadData:odData.dataValues}
+
+   // console.log("this is testing "+payload.payloadData.od_date);
 
     //console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
     sendEmail(tableData.dataValues.email_id, payload, 4);

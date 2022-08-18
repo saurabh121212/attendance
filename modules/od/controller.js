@@ -36,6 +36,14 @@ function odApplication(req, res, next) {
           }
         })
       }
+      else if (result === 4) {
+        res.status(402).json({
+          status: 402,
+          result: {
+            mes: "You are not allowed to mark OD on National Holiday",
+          }
+        })
+      }
       else {
         res.status(200).json({
           status: 200,
