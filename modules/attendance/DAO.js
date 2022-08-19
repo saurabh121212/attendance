@@ -314,17 +314,19 @@ async function attendanceListV2(payload = {}) {
                 }
             })
 
-            if(leaveList!=null)
-            {
-                console.log("ttttt "+leaveList);
-            }
-
             dataObject = {
                 id: i,
                 status: 8,
                 status_text: "Leave Data",
                 date: dateConversion(date),
                 leave_data: leaveList
+            }
+
+            if(leaveList!=null)
+            {
+
+            i += (leaveList.dataValues.number_of_days-1)
+            console.log("testing2 ",leaveList.dataValues.number_of_days)
             }
 
         }
@@ -342,6 +344,9 @@ async function attendanceListV2(payload = {}) {
         findatData.push(dataObject);
     };
     return findatData;
+
+
+
 }
 
 
