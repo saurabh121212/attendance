@@ -195,7 +195,7 @@ async function attendanceListV2(payload = {}) {
     let year = parseInt(my_date[0]);
     let month = parseInt(my_date[1]) - 1; // this is the change -1 hataya he yaha se
 
-    console.log("yearttt ", year, " month ", month);
+    //console.log("yearttt ", year, " month ", month);
 
     let dataObject = {};
     let findatData = [];
@@ -205,7 +205,7 @@ async function attendanceListV2(payload = {}) {
     let odList;
     let leaveList;
 
-    console.log("date is 2 ", new Date(year, month, 1).toLocaleString('en-US'));
+   // console.log("date is 2 ", new Date(year, month, 1).toLocaleString('en-US'));
 
     const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
