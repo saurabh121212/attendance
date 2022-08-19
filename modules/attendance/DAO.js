@@ -322,13 +322,6 @@ async function attendanceListV2(payload = {}) {
                 leave_data: leaveList
             }
 
-            if(leaveList!=null)
-            {
-
-            i += (leaveList.dataValues.number_of_days-1)
-            console.log("testing2 ",leaveList.dataValues.number_of_days)
-            }
-
         }
 
         // This code is for check who is not mark attendance
