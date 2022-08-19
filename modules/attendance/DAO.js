@@ -312,7 +312,7 @@ async function attendanceListV2(payload = {}) {
                     },
                     leave_apply_by_id: user_id
                 }
-            });
+            })
 
             dataObject = {
                 id: i,
@@ -322,9 +322,9 @@ async function attendanceListV2(payload = {}) {
                 leave_data: leaveList
             }
 
-            if(leaveList=!null)
+            if(leaveList != null)
             {
-            console.log("this is testing leave "+leaveList)
+                console.log("this is leave testing "+leaveList)
             }
 
         }
