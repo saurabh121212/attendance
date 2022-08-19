@@ -217,7 +217,7 @@ async function attendanceListV2(payload = {}) {
         // new added
         //  date = new Date(date.toDateString().replace('IST', ''));
 
-        console.log("date ", date, " days ", date.getDay());
+       // console.log("date ", date, " days ", date.getDay());
         // This is for satuday Calculation in a month
         if (date.getDay() == 6) {
             dataObject = {
@@ -239,7 +239,7 @@ async function attendanceListV2(payload = {}) {
 
         // this code is for check persent today in the system 
         else if (date.getDay() !== 0 && date.getDay() !== 6) {
-            console.log("attendance_date ", " dateConversion(date) ", dateConversion(date))
+           // console.log("attendance_date ", " dateConversion(date) ", dateConversion(date))
 
             attendanceHistories = await attendance_history.findOne({
                 where: {
