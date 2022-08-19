@@ -314,6 +314,11 @@ async function attendanceListV2(payload = {}) {
                 }
             })
 
+            if(leaveList!=null)
+            {
+                console.log("ttttt "+leaveList);
+            }
+
             dataObject = {
                 id: i,
                 status: 8,
@@ -322,13 +327,7 @@ async function attendanceListV2(payload = {}) {
                 leave_data: leaveList
             }
 
-            if(leaveList != null)
-            {
-                console.log("this is leave testing "+leaveList)
-            }
-
         }
-
 
         // This code is for check who is not mark attendance
         if (attendanceHistories == null && odList == null && leaveList == null
