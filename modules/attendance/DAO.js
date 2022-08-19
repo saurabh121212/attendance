@@ -321,7 +321,10 @@ async function attendanceListV2(payload = {}) {
                 date: dateConversion(date),
                 leave_data: leaveList
             }
-            console.log("this is leaveTesting "+dataObject.leave_data);
+
+            
+            console.log("this is testing leave "+leaveList.dataValues)
+
         }
 
 
