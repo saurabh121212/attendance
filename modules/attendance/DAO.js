@@ -212,7 +212,7 @@ async function attendanceListV2(payload = {}) {
     for (let i = 1; i <= daysInMonth[month]; i++) {
         let date = new Date(year, month, i);
 
-        console.log("date is IN", new Date(year, month, 0))
+      //  console.log("date is IN", new Date(year, month, 0))
 
         // new added
         //  date = new Date(date.toDateString().replace('IST', ''));
