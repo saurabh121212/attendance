@@ -324,7 +324,7 @@ async function attendanceListV2(payload = {}) {
 
             if(leaveList=!null)
             {
-            console.log("this is testing leave "+leaveList.dataValues)
+            console.log("this is testing leave "+leaveList)
             }
 
         }
