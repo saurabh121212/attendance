@@ -94,10 +94,7 @@ async function leaveApproveReject(leave_id, payload = {}) {
     })
 
 
-   
-
   //  const leaveStatus = payload.leave_status == 3 ? "Approved" : "Rejected"
-
     //console.log("leave data ",tableData2.dataValues.email_id,"Leave Application",`${payload.leave_type} Leave applyed by ${payload.leave_apply_by_name}` );
 
     return leave_table.update(

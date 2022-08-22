@@ -330,7 +330,7 @@ async function attendanceListV2(payload = {}) {
             dataObject = {
                 id: i,
                 status: 11,
-                status_text: "Not Mark Today",
+                status_text: "Attendance Not Marked",
                 date: dateConversion(date),
             }
         }

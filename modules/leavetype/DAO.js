@@ -17,7 +17,7 @@ async function leaveTypeCreate(payload = {}) {
 async function leaveTypelist(year) {
   return leave_type.findAll({
     where: {
-      year: year,
+      //year: year,
       del_status:
       { [Op.ne]: 0 } 
     }
