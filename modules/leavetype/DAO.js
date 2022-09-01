@@ -90,7 +90,7 @@ console.log("leaveCount ",leaveCount);
     }
   }
   else {
-      let div = parseInt(diffMonths / 12);
+      let div = parseInt(diffMonths / 4);
       console.log("m testing 01 ", div," ", diffMonths);
       diffMonths = diffMonths + div;
       parseJson = {
