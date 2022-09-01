@@ -34,13 +34,13 @@ function adminTotal(req, res, next) {
 
   function testingSSA(req, res, next) {
     payload = req.body;
-    console.log(payload);
+    console.log(req);
     
     res.status(200).json({
       status: 200,
       result:{
         mes: "SSA Data",
-        list: payload
+        list: req
       }
     })
   }
