@@ -3,6 +3,9 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
+const emailTemplate = require('./helpers/emailTemp')
+
+
 // endware
 const {handleResponse} = require("./endwares/response");
 
@@ -47,14 +50,23 @@ cors()
 
 // handle root route
 app.get('/', (req, res) => {
+
+  res.sendFile(__dirname + "/htmlCode/index.html");
+
     res.status(200).json({
       version: 1.0,
       msg: "Attendance Management System API built on NodeJs"
     })
   })
+
+  app.get('/events', (req, res) => {
+    let payload = req.body;
+    console.log("this is testing ",payload);
+    output = emailTemplate.htmlPageSendSSA(payload);
+    res.send(output)
+    })
   
   // app.get('/get', (req, res) => {
-
   //   console.log(
   //     "data: ",req.params,
   //     "data2: ",req.body,

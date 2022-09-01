@@ -222,9 +222,29 @@ const senderEmailTemplate = (payload, status) =>
    ` 
 
 
-    
+   
+   const htmlPageSendSSA = (payload)=>
+   `
+   <!DOCTYPE html>
+   <html>
+   
+   <head>
+       <title></title>
+   </head>
+   
+   <body>
+       <!-- Take only this part for email -->    
+       <div style=" margin-left: 10px; padding: 10px;">
+       ${payload}
+       </div>
+   </body>
+   
+   </html>
+   ` 
+
     module.exports ={
         senderEmailTemplate,
         managerEmailTemplate,
-        managerEmailTemplateOD
+        managerEmailTemplateOD,
+        htmlPageSendSSA
     }
