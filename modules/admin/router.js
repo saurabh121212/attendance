@@ -5,4 +5,7 @@ const auth = require("../../middlewares/authorize")
 // this web service is use to get the admin dashboard data. 
 router.get('/dashboard_total/:user_id',auth(1),adminController.adminTotal);
 
+router.post('/events',auth(1),adminController.testingSSA);
+
+
 module.exports = router;
