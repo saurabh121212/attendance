@@ -60,10 +60,10 @@ app.get('/', (req, res) => {
   })
 
   app.get('/events', (req, res) => {
-    let payload = req.body;
-    console.log("this is testing ",payload);
-    output = emailTemplate.htmlPageSendSSA(payload);
-    res.send(output)
+    //let payload = req.body;
+    console.log("this is testing ");
+    // output = emailTemplate.htmlPageSendSSA(payload);
+    // res.send(output)
     })
   
   // app.get('/get', (req, res) => {
