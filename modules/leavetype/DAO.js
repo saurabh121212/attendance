@@ -89,29 +89,7 @@ console.log("leaveCount ",leaveCount);
       leaveCount:leaveCount
     }
   }
-  else if (diffMonths < 12) {
-    parseJson = {
-      id: 1,
-      name: "Annual Leave",
-      numberOfDays: diffMonths,
-      leaveCount:leaveCount
-    }
-  }
-  else if (diffMonths >= 12) {
-    let dateOfJoinging2 = dateOfJoinging.split("-")
-
-    // if employee join befour 15th 
-    if (dateOfJoinging2[2] < 15) {
-      let div = parseInt(diffMonths / 12);
-      diffMonths = diffMonths + div + 1;
-      parseJson = {
-        id: 1,
-        name: "Annual Leave",
-        numberOfDays: diffMonths,
-        leaveCount:leaveCount
-      }
-    }
-    else {
+  else {
       let div = parseInt(diffMonths / 12);
       diffMonths = diffMonths + div;
       parseJson = {
@@ -120,8 +98,33 @@ console.log("leaveCount ",leaveCount);
         numberOfDays: diffMonths,
         leaveCount:leaveCount
       }
-    }
   }
+
+  // else if (diffMonths >= 12) {
+  //   let dateOfJoinging2 = dateOfJoinging.split("-")
+
+  //   // if employee join befour 15th 
+  //   if (dateOfJoinging2[2] < 15) {
+  //     let div = parseInt(diffMonths / 12);
+  //     diffMonths = diffMonths + div + 1;
+  //     parseJson = {
+  //       id: 1,
+  //       name: "Annual Leave",
+  //       numberOfDays: diffMonths,
+  //       leaveCount:leaveCount
+  //     }
+  //   }
+  //   else {
+  //     let div = parseInt(diffMonths / 12);
+  //     diffMonths = diffMonths + div;
+  //     parseJson = {
+  //       id: 1,
+  //       name: "Annual Leave",
+  //       numberOfDays: diffMonths,
+  //       leaveCount:leaveCount
+  //     }
+  //   }
+  // }
   return parseJson
 }
 
