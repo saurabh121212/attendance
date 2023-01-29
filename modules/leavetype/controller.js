@@ -88,8 +88,7 @@ function leaveTypeCreate(req, res, next) {
       })
   }
   
-
-
+  
   function anualLeaveCount(req, res, next) {
     if (!req.params.user_id) {
       res.status(400).json({

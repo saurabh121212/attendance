@@ -80,6 +80,8 @@ console.log("leaveCount ",leaveCount);
   todayDate = todayDate.split(" ")[0];
 
   let diffMonths = monthDiff(dateOfJoinging, todayDate);
+  console.log("dateOFJoining ",dateOfJoinging," today date ", todayDate, " month diff ",diffMonths);
+  //console.log("month diff ", diffMonths);
 
   if (diffMonths <= 3) {
     parseJson = {

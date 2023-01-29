@@ -28,6 +28,14 @@ function odApplication(req, res, next) {
           }
         })
       }
+      else if (result === 2) {
+        res.status(402).json({
+          status: 402,
+          result: {
+            mes: "You are already applyed OD for this date",
+          }
+        })
+      }
       else if (result === 3) {
         res.status(402).json({
           status: 402,

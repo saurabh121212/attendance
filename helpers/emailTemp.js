@@ -91,6 +91,7 @@ const senderEmailTemplate = (payload, status) =>
                    </div>
                </td>
            </tr>
+
            <tr>
                <td style="width: 50%; vertical-align: top;">
                    <div style=" margin-left: 10px; padding: 10px; ">
@@ -103,9 +104,23 @@ const senderEmailTemplate = (payload, status) =>
                    </div>
                </td>
            </tr>
+
+           <tr>
+           <td style="width: 50%; vertical-align: top;">
+               <div style=" margin-left: 10px; padding: 10px; ">
+               Employee Comments
+               </div>
+           </td>
+           <td style="vertical-align: top;">
+               <div style=" margin-left: 10px; padding: 10px;">
+               ${payload.leave_apply_by_comments}
+               </div>
+           </td>
+          </tr>
+
            <tr>
                <td>
-                   <a href="http://54.204.113.214:3000/report/leave-requests">
+                   <a href="http://10.0.10.105/report/leave-requests">
                        <button type="button"
                            style="border: 0px; background:lightgreen; width: 100%; height: 40px; text-transform: uppercase;">
                            Approve
@@ -113,7 +128,7 @@ const senderEmailTemplate = (payload, status) =>
                    </a>
                </td>
                <td>
-                   <a href="http://54.204.113.214:3000/report/leave-requests">
+                   <a href="http://10.0.10.105/report/leave-requests">
                        <button type="button"
                            style="border: 0px; background:lightcoral; width: 100%; height: 40px; text-transform: uppercase;">
                            Reject
@@ -197,9 +212,25 @@ const senderEmailTemplate = (payload, status) =>
                    </div>
                </td>
            </tr>
+
+
+           <tr>
+           <td style="width: 50%; vertical-align: top;">
+               <div style=" margin-left: 10px; padding: 10px; ">
+               Employee Comments
+               </div>
+           </td>
+           <td style="vertical-align: top;">
+               <div style=" margin-left: 10px; padding: 10px;">
+               ${payload.od_comments}
+               </div>
+           </td>
+          </tr>
+
+
            <tr>
                <td>
-                   <a href="http://54.204.113.214:3000/report/od-requests">
+                   <a href="http://10.0.10.105/report/od-requests">
                        <button type="button"
                            style="border: 0px; background:lightgreen; width: 100%; height: 40px; text-transform: uppercase;">
                            Approve
@@ -207,7 +238,7 @@ const senderEmailTemplate = (payload, status) =>
                    </a>
                </td>
                <td>
-                   <a href="http://54.204.113.214:3000/report/od-requests">
+                   <a href="http://10.0.10.105/report/od-requests">
                        <button type="button"
                            style="border: 0px; background:lightcoral; width: 100%; height: 40px; text-transform: uppercase;">
                            Reject

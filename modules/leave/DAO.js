@@ -1,4 +1,4 @@
-const { leave_table, user, attendance_history ,od_table} = require('../../models');
+const { leave_table, user, attendance_history ,od_table,holidays_list} = require('../../models');
 const { Op, Sequelize } = require("sequelize");
 const sendEmail = require('../../helpers/email')
 
@@ -47,6 +47,45 @@ async function leaveApplication(payload = {}) {
         return result = 2;
     }
 
+
+
+    // check Already Applyed for Leave
+    let leaveList = await leave_table.findOne({
+        where: {
+            start_date: {
+                [Op.gte]: payload.start_date
+            },
+            end_date: {
+                [Op.lte]: payload.end_date
+            },
+            leave_status: {
+                [Op.ne]: 2
+            },
+            leave_apply_by_id: payload.leave_apply_by_id
+        }
+    });
+
+    if(leaveList!= null)
+    {
+        return result = 3;
+    }
+
+
+    // // check for national holiday. 
+    // let holidayList = await holidays_list.findOne({
+    //     where:{
+    //         hoiday_date: {
+    //             [Op.gte]: payload.start_date,
+    //             [Op.lte]: payload.end_date
+    //         },
+    //       del_status:1,
+    //     }
+    //   })
+
+    //   if(holidayList!= null)
+    //   {
+    //        return result = 4;
+    //   }
 
     // finding a manager of employee
     const tableData = await user.findOne({

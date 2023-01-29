@@ -25,6 +25,22 @@ async function odApplication(payload = {}) {
     }
 
 
+     // check Od 
+     let odList = await od_table.findOne({
+        where: {
+            od_date: payload.od_date,
+            apply_by_id: payload.apply_by_id,
+            od_status: {
+                [Op.ne]: 2
+            }
+        }
+    })
+
+    if (odList != null) {
+        return result = 2;
+    }
+
+
     let holidayList = await holidays_list.findOne({
         where:{
           del_status:1,
@@ -58,6 +74,8 @@ async function odApplication(payload = {}) {
         return result = 3;
     }
 
+
+    
 
 
     // finding a manager of employee
