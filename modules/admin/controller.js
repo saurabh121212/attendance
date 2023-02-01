@@ -31,7 +31,39 @@ function adminTotal(req, res, next) {
       })
   }
   
+
+  function managerTotal(req, res, next) {
+    payload = req.body;
+    if (!req.params.user_id) {
+      res.status(400).json({
+        status: 400,
+        result: {
+          msg: "fields are missing",
+          list: []
+        }
+      })
+      return next();
+    }
   
+    AdminData.managerTotal(req.params.user_id,getDate())
+      .then((result) => {
+        res.status(200).json({
+          status: 200,
+          result:{
+            mes: "Manager DashBoard Data",
+            list: result
+          }
+        })
+      }).catch(err => {
+        res.data = { err }
+        console.log(err)
+        return res;
+      })
+  }
+
+  
+
+
 function getDate()
 {
   var today = new Date();
@@ -44,4 +76,5 @@ function getDate()
 
   module.exports = {
     adminTotal,
+    managerTotal
   }

@@ -86,9 +86,7 @@ async function ragister(payload = {}) {
      }).then((result)=>{
        return result
      })
-   
 }
-
 
 
  async function updateToken(token, id) {
