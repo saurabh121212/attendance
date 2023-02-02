@@ -17,7 +17,7 @@ async function adminTotal(user_id,date) {
 
     const odCountFilter = {
         od_status:  {
-            [Op.eq]: 2
+            [Op.ne]: 2
         },
         od_date: date,
     }
@@ -28,7 +28,7 @@ async function adminTotal(user_id,date) {
     
     const filterOnLeaveToday = {
         leave_status: {
-            [Op.eq]: 2
+            [Op.ne]: 2
         },
         start_date: {
             [Op.lte]: date  
@@ -139,7 +139,7 @@ async function managerTotal(user_id,date) {
 
     const odCountFilter = {
         od_status:  {
-            [Op.eq]: 2
+            [Op.ne]: 2
         },
         od_date: date,
         apply_by_id:{
@@ -156,7 +156,7 @@ async function managerTotal(user_id,date) {
     
     const filterOnLeaveToday = {
         leave_status: {
-            [Op.eq]: 2
+            [Op.ne]: 2
         },
         start_date: {
             [Op.lte]: date  

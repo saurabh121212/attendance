@@ -338,8 +338,6 @@ async function attendanceListV2(payload = {}) {
     };
     return findatData;
 
-
-
 }
 
 
