@@ -114,6 +114,18 @@ async function attendanceList(payload = {}) {
     }
 
 
+    const lateFiltter = {
+        user_id: { [Op.eq]: user_id },
+        attendance_date: { [Op.gte]: payload.start_date },
+        attendance_date: { [Op.lte]: payload.end_date },
+        clock_in_time: {
+            [Op.gte]: '08:15'
+        },
+    }
+
+
+  
+
     // const attendanceListMonthly = await attendance_history.findAll({
     //     where: filterOfDate,
     //     order: [['attendance_id', 'DESC']],
@@ -167,6 +179,15 @@ async function attendanceList(payload = {}) {
         where: leaveFilter
     });
 
+
+          // This is for count total number of Lates
+         const lateCount = await attendance_history.count({
+            attributes: [
+                [Sequelize.fn('COUNT', Sequelize.col('attendance_id')), 'lateToday']
+            ],
+            where: lateFiltter
+        });
+
     // console.log("total working hours 1 ", totalWorkingHrs);
     // let hours = totalWorkingHrs.toString().split(":")[0];
     // let minuts = totalWorkingHrs.toString().split(":")[1];
@@ -186,7 +207,7 @@ async function attendanceList(payload = {}) {
     //  minuts = avgClockOutTime.split(":")[1]
     //  avgClockOutTime = hours+":"+minuts;
 
-    return { totalWorkingHrs, avgClockInTime, avgClockOutTime, odCount, leaveCount };
+    return { totalWorkingHrs, avgClockInTime, avgClockOutTime, odCount, leaveCount , lateCount };
 }
 
 async function attendanceListV2(payload = {}) {
