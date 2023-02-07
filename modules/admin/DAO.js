@@ -53,6 +53,12 @@ async function adminTotal(user_id,date) {
         where: useCountFilter
     });
 
+
+    const userListTotal = await user.findAll({
+        where: useCountFilter
+    });
+
+
     // This is for count total number of OD 
     const odCount = await od_table.count({
         attributes: [
@@ -99,10 +105,28 @@ async function adminTotal(user_id,date) {
         where: lateCountFilter
     });
 
-        // This is for count total number of persent emp 
-        const lateTodayList = await attendance_history.findAll({
+     // This is for count total number of persent emp 
+    const lateTodayList = await attendance_history.findAll({
             where: lateCountFilter
         });
+
+
+        let absentCount = userCout - odCount - presentToday - onLeaveToday;
+        console.log("absent today ",absentCount);
+
+        console.log("list of total users ",userListTotal);
+
+
+        // for(let i = 0; i< userListTotal.length; i++)
+        // {
+        //     for (let j = 0; j< presentTodayList.length; j++)
+        //     {
+        //         if(userListTotal[i] == presentCountFinter[j]);
+        //         useCountFilter.splice(index);
+        //     }
+
+        // }
+
 
     return { userCout, odCount, presentToday, onLeaveToday, lateToday, presentTodayList, onLeaveTodayList,lateTodayList,odCountList };
 }
