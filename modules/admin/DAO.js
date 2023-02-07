@@ -114,7 +114,7 @@ async function adminTotal(user_id,date) {
         let absentCount = userCout - odCount - presentToday - onLeaveToday;
         console.log("absent today ",absentCount);
 
-        console.log("list of total users ",userListTotal.user.dataValues[0]);
+        console.log("list of total users ",userListTotal);
 
 
         // for(let i = 0; i< userListTotal.length; i++)
