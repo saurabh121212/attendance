@@ -5,14 +5,14 @@ const emailTemplate = require('./emailTemp')
 async function sendEmail(email,payload,status) {
 
     let emailList = [
-        // 'jvh@computronics.sz',
-        // 'kunal@computronics.sz',
-        // 'riley@computronics.sz',
-        // 'syed@computronics.sz',
-        // 'nathi@computronics.sz',
-        // 'marina@computronics.sz',
-        // 'reception@computronics.sz'
-        'test@gmail.com'
+        'jvh@computronics.sz',
+        'kunal@computronics.sz',
+        'riley@computronics.sz',
+        'syed@computronics.sz',
+        'nathi@computronics.sz',
+        'marina@computronics.sz',
+        'reception@computronics.sz'
+       // 'test@gmail.com'
       ];
 
     let subject;
