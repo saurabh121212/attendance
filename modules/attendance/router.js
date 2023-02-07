@@ -16,7 +16,7 @@ router.post('/punch_in_data',auth(1),attendanceController.attendancePunchInPunch
 router.post('/listV2',auth(2),attendanceController.attendanceListV2);
 
 // this web service is use for getting current date employee details. 
-router.post('/single_day_emp_details',auth(2),attendanceController.singleDayEmpDetails)
+router.post('/single_day_emp_details',auth(2),attendanceController.singleDayEmpDetails);
 
 
 router.get('/testingpost',attendanceController.attendanceListV3)

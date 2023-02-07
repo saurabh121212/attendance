@@ -54,7 +54,7 @@ async function adminTotal(user_id,date) {
     });
 
 
-    const userListTotal = await user.findAll({
+    const userListAbsentTotal = await user.findAll({
         where: useCountFilter
     });
 
@@ -111,31 +111,47 @@ async function adminTotal(user_id,date) {
         });
 
 
+        // This code is for find the absent emplyee count today
         let absentCount = userCout - odCount - presentToday - onLeaveToday;
-        console.log("absent today ",absentCount);
-
-        console.log("list of total users ",userListTotal);
 
 
-        // for(let i = 0; i< userListTotal.length; i++)
-        // {
-        //     for (let j = 0; j< presentTodayList.length; j++)
-        //     {
-        //         if(userListTotal[i] == presentCountFinter[j]);
-        //         useCountFilter.splice(index);
-        //     }
+        // this code is for find the absent emplyee list today
+        for(let i = 0; i< userListAbsentTotal.length; i++)
+        {
+            for (let j = 0; j< presentTodayList.length; j++)
+            {
+                if(userListAbsentTotal[i].dataValues.user_id == presentTodayList[j].dataValues.user_id)
+                {
+                    userListAbsentTotal.splice(i,1);
+                }
+            }
 
-        // }
+
+            for (let k = 0; k< onLeaveTodayList.length; k++)
+            {
+                if(userListAbsentTotal[i].dataValues.user_id == onLeaveTodayList[k].dataValues.leave_apply_by_id)
+                {
+                    userListAbsentTotal.splice(i,1);
+                }
+            }
 
 
-    return { userCout, odCount, presentToday, onLeaveToday, lateToday, presentTodayList, onLeaveTodayList,lateTodayList,odCountList };
+            for (let l = 0; l< odCountList.length; l++)
+            {
+                if(userListAbsentTotal[i].dataValues.user_id == odCountList[l].dataValues.apply_by_id)
+                {
+                    userListAbsentTotal.splice(i,1);
+                }
+            }
+
+        }
+
+    return { userCout, odCount, presentToday, onLeaveToday, lateToday, presentTodayList, onLeaveTodayList,lateTodayList,odCountList,absentCount,userListAbsentTotal};
 }
 
 
 
-
 // For manager data.
-
 async function managerTotal(user_id,date) {
 
     console.log("Date ",date);

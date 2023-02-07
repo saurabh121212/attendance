@@ -497,6 +497,7 @@ async function singleDayEmpDetails(payload = {}) {
                 od_data: odList
             }
         }
+        
 
         if(leaveList == null && attendanceHistories == null && odList == null 
             && date.getDay() != 0 && date.getDay() !=6  && nationalHoliday == null) {
