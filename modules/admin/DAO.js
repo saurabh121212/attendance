@@ -111,46 +111,50 @@ async function adminTotal(user_id,date) {
         });
 
 
-        // This code is for find the absent emplyee count today
-        let absentCount = userCout - odCount - presentToday - onLeaveToday;
-
+        let absentCount;
         let userListAbsentTotal = [];
 
-        userListAbsentTotal = userListAbsentTotal.concat(userListTotal);
-       // console.log("userListAbsentTotal ",userListAbsentTotal.length," ",userListTotal.length);
-
-        // this code is for find the absent emplyee list today
-        for(let i = 0; i< userListTotal.length; i++)
+       for(let x = 0; x < userListTotal.length; x ++)
+       {
+        userListAbsentTotal.push(userListTotal[x].dataValues);
+       }
+       
+        let removeElements = [];
+        for(let i = 0; i < userListTotal.length; i++)
         {
-            for (let j = 0; j< presentTodayList.length; j++)
+            for (let j = 0; j < presentTodayList.length; j++)
             {
-                if(userListTotal[i].dataValues.user_id == presentTodayList[j].dataValues.user_id)
+                if(userListTotal[i].dataValues.user_id === presentTodayList[j].dataValues.user_id)
                 {
-                    userListAbsentTotal.splice(i,1);
+                   delete userListAbsentTotal[i]
                 }
             }
-
 
             for (let k = 0; k< onLeaveTodayList.length; k++)
             {
                 if(userListTotal[i].dataValues.user_id == onLeaveTodayList[k].dataValues.leave_apply_by_id)
                 {
-                    userListAbsentTotal.splice(i,1);
+                    delete userListAbsentTotal[i]
                 }
             }
-
 
             for (let l = 0; l< odCountList.length; l++)
             {
                 if(userListTotal[i].dataValues.user_id == odCountList[l].dataValues.apply_by_id)
                 {
-                    userListAbsentTotal.splice(i,1);
+                    delete userListAbsentTotal[i]
                 }
             }
-
         }
 
-    return { userCout, odCount, presentToday, onLeaveToday, lateToday, presentTodayList, onLeaveTodayList,lateTodayList,odCountList,absentCount,userListAbsentTotal};
+        userListAbsentTotal = userListAbsentTotal.filter(elements => {
+            return elements !== null;
+           });
+
+         // This code is for find the absent emplyee count today
+        absentCount = userListAbsentTotal.length;
+
+    return { userCout, odCount, presentToday, onLeaveToday, lateToday, presentTodayList, onLeaveTodayList,lateTodayList,odCountList,absentCount,userListAbsentTotal,removeElements};
 }
 
 
