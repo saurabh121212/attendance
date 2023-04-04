@@ -74,20 +74,22 @@ async function anualLeaveCount(user_id, todayDate) {
   })
 
 
-
-  let parseJson;
+  var parseJson;
 
   // for Kunal Sir.
   if (user_id == 16) {
-
-    let diffrenceValue = userData.dataValues.date_of_joining.toISOString().split("T")[0] - todayDate.split(" ")[0];
-    let totalNumberOfLeaves = diffrenceValue * 40;
+    let diffrenceValue =  
+    findYearDiffrence(userData.dataValues.date_of_joining.toISOString().split("T")[0],
+    todayDate.split(" ")[0])
+   
+    let numberOfDays = ((-1 * (diffrenceValue)) * 40);
+    console.log("numberOfDays ", numberOfDays);
 
     parseJson = {
       id: 1,
       name: "Annual Leave",
-      numberOfDays: 0,
-      leaveCount: totalNumberOfLeaves
+      numberOfDays: numberOfDays,
+      leaveCount: leaveCount
     }
   }
 
@@ -149,6 +151,8 @@ async function anualLeaveCount(user_id, todayDate) {
   //     }
   //   }
   // }
+
+  console.log("parseJson ",parseJson)
   return parseJson
 }
 
@@ -166,3 +170,26 @@ function monthDiff(d1, d2) {
     console.log(e);
   }
 }
+
+
+
+
+function findYearDiffrence(date1,date2) {
+  date1 = new Date(date1);
+  date2 = new Date(date2);
+    var diff = Math.floor(date1.getTime() - date2.getTime());
+    var day = 1000 * 60 * 60 * 24;
+
+    var days = Math.floor(diff/day);
+    var months = Math.floor(days/31);
+    var years = Math.floor(months/12);
+
+    // var message = date2.toDateString();
+    // message += " was "
+    // message += days + " days " 
+    // message += months + " months "
+    // message += years + " years ago \n"
+
+     console.log("testing message ",years);
+    return years
+    }
