@@ -149,6 +149,7 @@ async function attendanceList(payload = {}) {
         and attendance_date between '${startDate}' AND '${endDate}'`,
         { type: QueryTypes.SELECT });
 
+        
     let avgClockOutTime = await db.sequelize.query(
         `SELECT SEC_TO_TIME(ROUND(AVG(TIME_TO_SEC(clock_out_time)),0)) As avgTime
         FROM attendance_db.attendance_histories 

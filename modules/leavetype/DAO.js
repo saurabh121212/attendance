@@ -1,4 +1,4 @@
-const { leave_type, user , leave_table } = require('../../models');
+const { leave_type, user, leave_table } = require('../../models');
 const { Op, Sequelize } = require("sequelize");
 
 
@@ -19,7 +19,7 @@ async function leaveTypelist(year) {
     where: {
       //year: year,
       del_status:
-      { [Op.ne]: 0 } 
+        { [Op.ne]: 0 }
     }
   }).then((result) => {
     return result
@@ -33,7 +33,7 @@ async function leaveTypeupdate(leave_type_id, payload) {
       leave_name: payload.leave_name,
       total_number_of_days: payload.total_number_of_days,
       year: payload.year,
-      eligible_for:payload.eligible_for
+      eligible_for: payload.eligible_for
     },
     {
       where: {
@@ -48,59 +48,79 @@ async function leaveTypeupdate(leave_type_id, payload) {
 async function anualLeaveCount(user_id, todayDate) {
 
   // Get Leave Count 
- let leaveCount =  await leave_table.findAll({
+  let leaveCount = await leave_table.findAll({
     attributes: [
-        "leave_type","leave_type_id",
-        [Sequelize.fn('SUM', Sequelize.col('number_of_days')), 'TotalLeaves']
+      "leave_type", "leave_type_id",
+      [Sequelize.fn('SUM', Sequelize.col('number_of_days')), 'TotalLeaves']
     ],
     group: 'leave_type',
     raw: true,
     where: {
-        leave_apply_by_id:user_id,
-        leave_type:"Annual Leave",
-        leave_status: {
-            [Op.ne]: 2
-        }
+      leave_apply_by_id: user_id,
+      leave_type: "Annual Leave",
+      leave_status: {
+        [Op.ne]: 2
+      }
     }
-});
+  });
 
-console.log("leaveCount ",leaveCount);
 
-// Get Total Number Of Leaves
+  console.log("leaveCount ", leaveCount);
+
+  // Get Total Number Of Leaves
   let userData = await user.findOne({
     attributes: { exclude: ['password', 'otp'] },
     where: { user_id: user_id },
   })
 
-  let parseJson;
-  console.log("test ", userData.dataValues.date_of_joining);
-  let dateOfJoinging = userData.dataValues.date_of_joining.toISOString().split("T")[0];
-  console.log("test2 ", dateOfJoinging);
 
-  todayDate = todayDate.split(" ")[0];
 
-  let diffMonths = monthDiff(dateOfJoinging, todayDate);
-  console.log("dateOFJoining ",dateOfJoinging," today date ", todayDate, " month diff ",diffMonths);
-  //console.log("month diff ", diffMonths);
+  // for Kunal Sir.
+  if (user_id == 16) {
 
-  if (diffMonths <= 3) {
+    let diffrenceValue = userData.dataValues.date_of_joining.toISOString().split("T")[0] - todayDate.split(" ")[0];
+    let totalNumberOfLeaves = diffrenceValue * 40;
+
     parseJson = {
       id: 1,
       name: "Annual Leave",
       numberOfDays: 0,
-      leaveCount:leaveCount
+      leaveCount: totalNumberOfLeaves
     }
   }
+
+  // For All others
   else {
+    let parseJson;
+    console.log("test ", userData.dataValues.date_of_joining);
+    let dateOfJoinging = userData.dataValues.date_of_joining.toISOString().split("T")[0];
+    console.log("test2 ", dateOfJoinging);
+
+    todayDate = todayDate.split(" ")[0];
+
+    let diffMonths = monthDiff(dateOfJoinging, todayDate);
+    console.log("dateOFJoining ", dateOfJoinging, " today date ", todayDate, " month diff ", diffMonths);
+    //console.log("month diff ", diffMonths);
+
+    if (diffMonths <= 3) {
+      parseJson = {
+        id: 1,
+        name: "Annual Leave",
+        numberOfDays: 0,
+        leaveCount: leaveCount
+      }
+    }
+    else {
       let div = parseInt(diffMonths / 4);
-      console.log("m testing 01 ", div," ", diffMonths);
+      console.log("m testing 01 ", div, " ", diffMonths);
       diffMonths = diffMonths + div;
       parseJson = {
         id: 1,
         name: "Annual Leave",
         numberOfDays: diffMonths,
-        leaveCount:leaveCount
+        leaveCount: leaveCount
       }
+    }
   }
 
   // else if (diffMonths >= 12) {
