@@ -75,6 +75,8 @@ async function anualLeaveCount(user_id, todayDate) {
 
 
 
+  let parseJson;
+
   // for Kunal Sir.
   if (user_id == 16) {
 
@@ -91,7 +93,6 @@ async function anualLeaveCount(user_id, todayDate) {
 
   // For All others
   else {
-    let parseJson;
     console.log("test ", userData.dataValues.date_of_joining);
     let dateOfJoinging = userData.dataValues.date_of_joining.toISOString().split("T")[0];
     console.log("test2 ", dateOfJoinging);
