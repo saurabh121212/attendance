@@ -3,7 +3,7 @@ const { generateJWT, getDateTime, checkMissingFields } = require(__helpers + "/u
 
 function punchIn(req, res, next) {
   let payload = req.body;
-  let missingFields = checkMissingFields(payload, ['user_id', 'user_name', 'clock_in_time','attendance_date'])
+  let missingFields = checkMissingFields(payload, ['user_id', 'user_name','attendance_date'])
   if (missingFields.length) {
     res.status(400).json({
       status: 400,
@@ -15,7 +15,16 @@ function punchIn(req, res, next) {
     return next()
   }
 
-  payload = { ...payload,del_status: 1, createdAt: getDateTime()};
+  // to get server timings
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
+  var time = today.getHours() + ":" + today.getMinutes();
+  console.log("this is Testing date time  ", dateTime," time ",time);
+
+  payload = { ...payload,del_status: 1, createdAt: getDateTime(),"clock_in_time":time};
+ 
   Attendance.punchInCreate(payload)
     .then(result => {
       console.log(result);
@@ -65,7 +74,7 @@ function punchIn(req, res, next) {
 
 function punchOut(req, res, next) {
   let payload = req.body;
-  let missingFields = checkMissingFields(payload, ['user_id', 'user_name', 'clock_out_time','date'])
+  let missingFields = checkMissingFields(payload, ['user_id', 'user_name','date'])
   if (missingFields.length) {
     res.status(400).json({
       status: 400,
@@ -77,7 +86,16 @@ function punchOut(req, res, next) {
     return next()
   }
 
-  payload = {...payload, created_at: getDateTime(), del_status: 1};
+
+  // to get server timings
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
+  var time = today.getHours() + ":" + today.getMinutes();
+  console.log("this is Testing date time  ", dateTime," time ",time);
+
+  payload = {...payload, created_at: getDateTime(), del_status: 1,"clock_out_time":time};
 
   Attendance.punchOutCreate(req.params.attendance_id, payload)
     .then(result => {
