@@ -172,6 +172,14 @@ function leaveCount(req, res, next) {
     return next()
   }
 
+  // to get server timings
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
+  var time = today.getHours() + 2  + ":" + today.getMinutes();
+  console.log("this is Testing date time  ", dateTime," time ",time);
+
   Leave.leaveCount(payload)
     .then((result) => {
       res.status(200).json({
