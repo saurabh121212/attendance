@@ -27,7 +27,7 @@ function punchIn(req, res, next) {
 
   minutes = today.getMinutes();
 
-  if (today.getHours() < 10) {
+  if (hours < 10) {
     hours = "0" + hours;
   }
   if (today.getMinutes() < 10) {
@@ -114,7 +114,7 @@ function punchOut(req, res, next) {
   minutes = today.getMinutes();
   console.log("tedt", hours);
 
-  if (today.getHours() < 10) {
+  if (hours < 10) {
     hours = "0" + hours;
   }
   if (today.getMinutes() < 10) {
