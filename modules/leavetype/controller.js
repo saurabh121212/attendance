@@ -35,10 +35,7 @@ function leaveTypeCreate(req, res, next) {
   
   function leaveTypelist(req,res){
 
-
-     
-    console.log(dateTime)
-    if (!req.params.year) {
+      if (!req.params.year) {
       res.status(400).json({
         status: 400,
         result: {

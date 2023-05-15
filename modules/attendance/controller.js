@@ -3,7 +3,7 @@ const { generateJWT, getDateTime, checkMissingFields } = require(__helpers + "/u
 
 function punchIn(req, res, next) {
   let payload = req.body;
-  let missingFields = checkMissingFields(payload, ['user_id', 'user_name','attendance_date'])
+  let missingFields = checkMissingFields(payload, ['user_id', 'user_name', 'attendance_date'])
   if (missingFields.length) {
     res.status(400).json({
       status: 400,
@@ -17,14 +17,28 @@ function punchIn(req, res, next) {
 
   // to get server timings
   var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date+' '+time;
-  var time = today.getHours() + ":" + today.getMinutes();
-  console.log("this is Testing date time  ", dateTime," time ",time);
+  var dateTime = date + ' ' + time;
+  //  var time = today.getHours() + 2 + ":" + today.getMinutes();
+  var hours, minutes;
+  hours = today.getHours();
+  hours = parseInt(hours) + 2;
 
-  payload = { ...payload,del_status: 1, createdAt: getDateTime(),"clock_in_time":time};
- 
+  minutes = today.getMinutes();
+
+  if (today.getHours() < 10) {
+    hours = "0" + hours;
+  }
+  if (today.getMinutes() < 10) {
+    minutes = "0" + today.getMinutes();
+  }
+
+  var time = hours + ":" + minutes;
+  console.log("this is Testing date time  ", dateTime, " time ", time);
+
+  payload = { ...payload, del_status: 1, createdAt: getDateTime(), "clock_in_time": time };
+
   Attendance.punchInCreate(payload)
     .then(result => {
       console.log(result);
@@ -45,7 +59,7 @@ function punchIn(req, res, next) {
         })
       }
 
-     else if (result[1] === false) {
+      else if (result[1] === false) {
         res.status(402).json({
           status: 402,
           result: {
@@ -74,7 +88,7 @@ function punchIn(req, res, next) {
 
 function punchOut(req, res, next) {
   let payload = req.body;
-  let missingFields = checkMissingFields(payload, ['user_id', 'user_name','date'])
+  let missingFields = checkMissingFields(payload, ['user_id', 'user_name', 'date'])
   if (missingFields.length) {
     res.status(400).json({
       status: 400,
@@ -89,13 +103,28 @@ function punchOut(req, res, next) {
 
   // to get server timings
   var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date+' '+time;
-  var time = today.getHours() + ":" + today.getMinutes();
-  console.log("this is Testing date time  ", dateTime," time ",time);
+  var dateTime = date + ' ' + time;
 
-  payload = {...payload, created_at: getDateTime(), del_status: 1,"clock_out_time":time};
+  var hours, minutes;
+  hours = today.getHours();
+  hours = parseInt(hours) + 2;
+
+  minutes = today.getMinutes();
+  console.log("tedt", hours);
+
+  if (today.getHours() < 10) {
+    hours = "0" + hours;
+  }
+  if (today.getMinutes() < 10) {
+    minutes = "0" + today.getMinutes();
+  }
+
+  var time = hours + ":" + minutes;
+
+  console.log("this is Testing date time  ", dateTime, " time ", time);
+  payload = { ...payload, created_at: getDateTime(), del_status: 1, "clock_out_time": time };
 
   Attendance.punchOutCreate(req.params.attendance_id, payload)
     .then(result => {
@@ -139,8 +168,7 @@ function attendancePunchInPunchOut(req, res, next) {
   let payload = req.body;
   Attendance.attendancePunchInPunchOut(payload.user_id, payload.attendance_date)
     .then(result => {
-      if(result)
-      {
+      if (result) {
         res.status(200).json({
           status: 200,
           result: {
@@ -149,8 +177,7 @@ function attendancePunchInPunchOut(req, res, next) {
           }
         })
       }
-      else
-      {
+      else {
         res.status(205).json({
           status: 205,
           result: {
@@ -169,7 +196,7 @@ function attendancePunchInPunchOut(req, res, next) {
 
 function attendanceListV2(req, res, next) {
   let payload = req.body;
-  
+
   Attendance.attendanceListV2(payload)
     .then(result => {
       res.status(200).json({
@@ -190,7 +217,7 @@ function attendanceListV2(req, res, next) {
 
 function singleDayEmpDetails(req, res, next) {
   let payload = req.body;
-  
+
   // payload data current_date
   Attendance.singleDayEmpDetails(payload)
     .then(result => {
@@ -215,17 +242,16 @@ function attendanceListV3(req, res, next) {
   let payload = req.body;
 
   //console.log("datamyset ",req.body);
-  
+
   res.status(200).json({
-      mes: "done",
-      data1: req.body
+    mes: "done",
+    data1: req.body
   })
 }
 
 
 
-function getDate()
-{
+function getDate() {
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
