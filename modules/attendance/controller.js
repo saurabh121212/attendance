@@ -23,7 +23,7 @@ function punchIn(req, res, next) {
   //  var time = today.getHours() + 2 + ":" + today.getMinutes();
   var hours, minutes;
   hours = today.getHours();
-  hours = parseInt(hours) + 2;
+  hours = parseInt(hours);
 
   minutes = today.getMinutes();
 
@@ -109,7 +109,7 @@ function punchOut(req, res, next) {
 
   var hours, minutes;
   hours = today.getHours();
-  hours = parseInt(hours) + 2;
+  hours = parseInt(hours);
 
   minutes = today.getMinutes();
   console.log("tedt", hours);
