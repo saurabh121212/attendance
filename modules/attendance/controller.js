@@ -36,8 +36,7 @@ function punchIn(req, res, next) {
 
   var time = hours + ":" + minutes;
 
-  time = parseInt(time) + 2;
-
+  //time = parseInt(time) + 2;
   console.log("this is Testing date time  ", dateTime, " time ", time);
 
   payload = { ...payload, del_status: 1, createdAt: getDateTime(), "clock_in_time": time };
